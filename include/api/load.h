@@ -16,7 +16,7 @@
 #ifndef NARC_API_LOAD_H
 #define NARC_API_LOAD_H
 
-#include <api/error.h>
+#include <defs/error.h>
 #include <defs/narc.h>
 
 /*
