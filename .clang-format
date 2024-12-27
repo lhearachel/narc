@@ -1,0 +1,31 @@
+---
+BasedOnStyle: LLVM
+Language: Cpp
+AlignOperands: false
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: true
+  AfterStruct: false
+  AfterUnion: false
+  BeforeElse: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: false
+BreakBeforeBinaryOperators: All
+BreakBeforeBraces: Custom
+ColumnLimit: 0
+ContinuationIndentWidth: 4
+IncludeBlocks: Preserve
+IncludeCategories:
+  - Regex: "<[[:alnum:].]+>"
+    Priority: 1
+  - Regex: ".*"
+    Priority: 2
+IndentCaseLabels: false
+IndentWidth: 4
+InsertNewlineAtEOF: true
+UseTab: Never

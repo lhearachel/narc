@@ -1,0 +1,15 @@
+# Compiler artifacts
+*.o
+*.d
+*.exe
+*.out
+/narc
+build/*
+
+# LSP / IDE artifacts
+.cache/*
+.vscode/*
+compile_commands.json
+
+# Valgrind output
+valgrind.log
