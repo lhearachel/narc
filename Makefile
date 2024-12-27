@@ -16,8 +16,11 @@ TARGET = $(shell basename $(CURDIR))
 CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
 CFLAGS += -Iinclude
 
+CLI_SRC = $(wildcard cli/*.c)
+LIB_SRC = $(wildcard lib/*.c)
+
 INC = $(wildcard include/*.h)
-SRC = $(wildcard src/*.c)
+SRC = $(CLI_SRC) $(LIB_SRC)
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
 
@@ -33,6 +36,7 @@ debug: clean all
 release: CFLAGS += -DNDEBUG -O3
 release: clean all
 
+# TODO: Separate cli and lib targets
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJ)
 
