@@ -13,3 +13,6 @@ compile_commands.json
 
 # Valgrind output
 valgrind.log
+
+# Testing files
+*.narc
