@@ -1,4 +1,4 @@
-#include "narc.h"
+#include <api/error.h>
 
 const char *narc_strerror(enum narc_error error)
 {

@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_H
-#define NARC_H
+#ifndef NARC_API_ERROR_H
+#define NARC_API_ERROR_H
 
-#include <defs/narc.h>
+enum narc_error {
+    NARCERR_NONE = 0,
 
-#include <api/error.h>
-#include <api/load.h>
+    NARCERR_MAGIC,
+    NARCERR_BOM,
+    NARCERR_VERSION,
+    NARCERR_HEADER_SIZE,
+    NARCERR_NUM_SECTIONS,
 
-#endif // NARC_H
+    NARCERR_ERRNO = 0xFF,
+};
+
+/*
+ * Convert a `narc_error` value into a corresponding human-readable message.
+ */
+const char *narc_strerror(enum narc_error error);
+
+#endif // NARC_API_ERROR_H

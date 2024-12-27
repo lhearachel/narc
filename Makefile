@@ -16,10 +16,12 @@ TARGET = $(shell basename $(CURDIR))
 CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
 CFLAGS += -Iinclude
 
-CLI_SRC = $(wildcard cli/*.c)
-LIB_SRC = $(wildcard lib/*.c)
+LIB_APIS = error load
 
-INC = $(wildcard include/*.h)
+LIB_SRC = $(foreach api,$(LIB_APIS),$(wildcard lib/$(api)/*.c))
+CLI_SRC = $(wildcard cli/*.c)
+
+INC = $(wildcard include/*.h) $(wildcard include/*/*.h)
 SRC = $(CLI_SRC) $(LIB_SRC)
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)

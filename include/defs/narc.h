@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_H
-#define NARC_H
+#ifndef NARC_DEFS_NARC_H
+#define NARC_DEFS_NARC_H
 
-#include <defs/narc.h>
+#include <stdint.h>
 
-#include <api/error.h>
-#include <api/load.h>
+struct narc {
+    uint32_t magic;
+    uint16_t bom;
+    uint16_t version;
+    uint32_t size;
+    uint16_t header_size;
+    uint16_t num_sections;
+    unsigned char data[];
+};
 
-#endif // NARC_H
+#endif // NARC_DEFS_NARC_H

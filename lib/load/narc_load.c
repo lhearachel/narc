@@ -1,4 +1,6 @@
-#include "narc.h"
+#include <api/error.h>
+#include <api/load.h>
+#include <defs/narc.h>
 
 #include <stdint.h>
 #include <stdio.h>
