@@ -15,7 +15,7 @@
  */
 
 #include <api/check.h>
-#include <const/fimg.h>
+#include <defs/fimg.h>
 
 enum narc_error narc_check_fimg(const unsigned char vfs[], uint32_t *out_size)
 {

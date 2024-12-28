@@ -15,10 +15,6 @@
  */
 
 #include <api/pack.h>
-#include <const/fatb.h>
-#include <const/fimg.h>
-#include <const/fntb.h>
-#include <const/header.h>
 #include <defs/fatb.h>
 #include <defs/fimg.h>
 #include <defs/fntb.h>

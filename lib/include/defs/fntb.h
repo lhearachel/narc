@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#define FNTB_MAGIC 0x464E5442
+
 struct fntb_meta {
     uint32_t magic;
     uint32_t size;

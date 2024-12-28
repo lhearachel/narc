@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#define FATB_MAGIC 0x46415442
+
 struct fatb_meta {
     uint32_t magic;
     uint32_t size;

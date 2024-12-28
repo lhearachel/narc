@@ -15,7 +15,7 @@
  */
 
 #include <api/check.h>
-#include <const/fntb.h>
+#include <defs/fntb.h>
 
 enum narc_error narc_check_fntb(const unsigned char vfs[], uint32_t *out_size)
 {

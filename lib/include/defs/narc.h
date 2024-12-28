@@ -18,6 +18,11 @@
 
 #include <stdint.h>
 
+#define HEADER_MAGIC          0x4352414E
+#define HEADER_LE_BOM         0xFFFE
+#define HEADER_VERSION_MARKER 0x0100
+#define HEADER_NUM_SECTIONS   3
+
 struct narc {
     uint32_t magic;
     uint16_t bom;

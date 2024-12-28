@@ -15,7 +15,6 @@
  */
 
 #include <api/check.h>
-#include <const/fatb.h>
 #include <defs/fatb.h>
 
 #define ERROR_NEQ(expect, actual, err) \

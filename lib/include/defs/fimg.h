@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#define FIMG_MAGIC 0x46494D47
+
 struct fimg_meta {
     uint32_t magic;
     uint32_t size;
