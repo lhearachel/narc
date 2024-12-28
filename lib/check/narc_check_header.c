@@ -16,8 +16,6 @@
 
 #include <api/check.h>
 
-#include <stdio.h>
-
 #define NARC_MAGIC     0x4352414E
 #define LE_BOM         0xFFFE
 #define VERSION_MARKER 0x0100

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-#include <stdio.h>
 #include <api/check.h>
 
 #define FATB_MAGIC  0x46415442 // Reversed due to cast during validation
@@ -28,7 +27,7 @@
         }                              \
     }
 
-enum narc_error narc_check_fatb(const unsigned char vfs[], size_t *out_size)
+enum narc_error narc_check_fatb(const unsigned char vfs[], uint32_t *out_size)
 {
     uint32_t *magic = (uint32_t *)vfs;
     uint32_t *size = (uint32_t *)vfs + 1;

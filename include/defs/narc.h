@@ -28,4 +28,11 @@ struct narc {
     unsigned char vfs[];
 };
 
+struct vfs_ctx {
+    uint32_t fatb_ofs;
+    uint32_t fntb_ofs;
+    uint32_t fimg_ofs;
+    uint32_t vfs_size;
+};
+
 #endif // NARC_DEFS_NARC_H

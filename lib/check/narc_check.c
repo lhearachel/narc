@@ -23,11 +23,11 @@
         }                                   \
     }
 
-enum narc_error narc_check(const struct narc *narc, size_t out_sizes[3])
+enum narc_error narc_check(const struct narc *narc, struct vfs_ctx *out_vfs_ctx)
 {
     enum narc_error ret;
     ERROR_RET(NARCERR_NONE, narc_check_header(narc));
-    ERROR_RET(NARCERR_NONE, narc_check_vfs(narc, out_sizes));
+    ERROR_RET(NARCERR_NONE, narc_check_vfs(narc, out_vfs_ctx));
 
     return NARCERR_NONE;
 }

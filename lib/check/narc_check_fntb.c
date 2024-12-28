@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-#include <stdio.h>
 #include <api/check.h>
 
 #define FNTB_MAGIC 0x464E5442
 
-enum narc_error narc_check_fntb(const unsigned char vfs[], size_t *out_size)
+enum narc_error narc_check_fntb(const unsigned char vfs[], uint32_t *out_size)
 {
     uint32_t *magic = (uint32_t *)vfs;
     uint32_t *size = (uint32_t *)vfs + 1;

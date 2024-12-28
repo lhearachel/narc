@@ -23,12 +23,18 @@
         }                                   \
     }
 
-enum narc_error narc_check_vfs(const struct narc *narc, size_t out_sizes[3])
+enum narc_error narc_check_vfs(const struct narc *narc, struct vfs_ctx *out_vfs_ctx)
 {
+    uint32_t size;
     enum narc_error ret;
-    ERROR_RET(NARCERR_NONE, narc_check_fatb(narc->vfs, out_sizes));
-    ERROR_RET(NARCERR_NONE, narc_check_fntb(narc->vfs + out_sizes[0], &out_sizes[1]));
-    ERROR_RET(NARCERR_NONE, narc_check_fimg(narc->vfs + out_sizes[1] + out_sizes[0], &out_sizes[2]));
+
+    out_vfs_ctx->fatb_ofs = 0;
+    ERROR_RET(NARCERR_NONE, narc_check_fatb(narc->vfs, &size));
+    out_vfs_ctx->fntb_ofs = out_vfs_ctx->fatb_ofs + size;
+    ERROR_RET(NARCERR_NONE, narc_check_fntb(narc->vfs + out_vfs_ctx->fntb_ofs, &size));
+    out_vfs_ctx->fimg_ofs = out_vfs_ctx->fntb_ofs + size;
+    ERROR_RET(NARCERR_NONE, narc_check_fimg(narc->vfs + out_vfs_ctx->fimg_ofs, &size));
+    out_vfs_ctx->vfs_size = out_vfs_ctx->fimg_ofs + size;
 
     return NARCERR_NONE;
 }

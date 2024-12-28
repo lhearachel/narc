@@ -18,7 +18,7 @@
 
 #define FIMG_MAGIC 0x46494D47
 
-enum narc_error narc_check_fimg(const unsigned char vfs[], size_t *out_size)
+enum narc_error narc_check_fimg(const unsigned char vfs[], uint32_t *out_size)
 {
     uint32_t *magic = (uint32_t *)vfs;
     uint32_t *size = (uint32_t *)vfs + 1;

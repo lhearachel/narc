@@ -24,7 +24,7 @@
 
 #define HEADER_SIZE sizeof(struct narc)
 
-enum narc_error narc_load(const char *file_path, struct narc **out_narc, size_t out_vfs_sizes[3])
+enum narc_error narc_load(const char *file_path, struct narc **out_narc, struct vfs_ctx *out_vfs_ctx)
 {
     enum narc_error err;
     struct narc header;
@@ -53,7 +53,7 @@ enum narc_error narc_load(const char *file_path, struct narc **out_narc, size_t 
     fread((*out_narc)->vfs, sizeof(char), fsize - sizeof(header), f);
     fclose(f);
 
-    if ((err = narc_check_vfs(*out_narc, out_vfs_sizes)) != NARCERR_NONE) {
+    if ((err = narc_check_vfs(*out_narc, out_vfs_ctx)) != NARCERR_NONE) {
         free(*out_narc);
         *out_narc = NULL;
         return err;

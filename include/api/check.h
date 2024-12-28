@@ -26,7 +26,7 @@
  * succeed, then `out_sizes` will be populated according to the output result of
  * `narc_check_vfs`.
  */
-enum narc_error narc_check(const struct narc *narc, size_t out_sizes[3]);
+enum narc_error narc_check(const struct narc *narc, struct vfs_ctx *out_vfs_ctx);
 
 /*
  * Validate the integrity of a NARC's header. Unlike the section checks, the
@@ -49,24 +49,24 @@ enum narc_error narc_check_header_fsize(const struct narc *narc, const size_t fs
  * the individual sections in order (FATB, FNTB, FIMG). The calling client is
  * responsible for providing the memory space for `out_sizes`.
  */
-enum narc_error narc_check_vfs(const struct narc *narc, size_t out_sizes[3]);
+enum narc_error narc_check_vfs(const struct narc *narc, struct vfs_ctx *out_vfs_ctx);
 
 /*
  * Validate the integrity of a NARC's FATB section. If the FATB section is
  * valid, then `out_size` will contain the total size of the section.
  */
-enum narc_error narc_check_fatb(const unsigned char vfs[], size_t *out_size);
+enum narc_error narc_check_fatb(const unsigned char vfs[], uint32_t *out_size);
 
 /*
  * Validate the integrity of a NARC's FNTB section. If the FNTB section is
  * valid, then `out_size` will contain the total size of the section.
  */
-enum narc_error narc_check_fntb(const unsigned char vfs[], size_t *out_size);
+enum narc_error narc_check_fntb(const unsigned char vfs[], uint32_t *out_size);
 
 /*
  * Validate the integrity of a NARC's FIMG section. If the FIMG section is
  * valid, then `out_size` will contain the total size of the section.
  */
-enum narc_error narc_check_fimg(const unsigned char vfs[], size_t *out_size);
+enum narc_error narc_check_fimg(const unsigned char vfs[], uint32_t *out_size);
 
 #endif // NARC_API_CHECK_H
