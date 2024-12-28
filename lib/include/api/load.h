@@ -18,6 +18,7 @@
 
 #include <defs/error.h>
 #include <defs/narc.h>
+#include <defs/vfs.h>
 
 /*
  * Load a NARC from an existing file at the given path. If the file contents

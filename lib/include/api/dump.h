@@ -18,6 +18,7 @@
 
 #include <defs/error.h>
 #include <defs/narc.h>
+#include <defs/vfs.h>
 
 /*
  * Write the contents of a NARC's virtual filesystem (VFS) to the specified

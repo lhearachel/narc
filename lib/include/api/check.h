@@ -18,6 +18,7 @@
 
 #include <defs/error.h>
 #include <defs/narc.h>
+#include <defs/vfs.h>
 
 #include <stddef.h>
 
