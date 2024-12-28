@@ -13,30 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_DEFS_ERROR_H
-#define NARC_DEFS_ERROR_H
+#ifndef NARC_API_DUMP_H
+#define NARC_API_DUMP_H
 
-enum narc_error {
-    NARCERR_NONE = 0,
+#include <defs/error.h>
+#include <defs/narc.h>
 
-    NARCERR_MAGIC,
-    NARCERR_BOM,
-    NARCERR_VERSION,
-    NARCERR_FILE_SIZE,
-    NARCERR_HEADER_SIZE,
-    NARCERR_NUM_SECTIONS,
+/*
+ * Write the contents of a NARC's virtual filesystem (VFS) to the specified
+ * directory-path on disk. Any existing file-name table within the VFS will be
+ * ignored. Files written to disk will be assigned names derived from their
+ * VFS ID.
+ */
+enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const char *dst_dir);
 
-    NARCERR_FATB_MAGIC,
-    NARCERR_FATB_SIZE,
-    NARCERR_FATB_RESERVED,
-
-    NARCERR_FNTB_MAGIC,
-
-    NARCERR_FIMG_MAGIC,
-
-    NARCERR_DUMP_TARGET_IS_FILE,
-
-    NARCERR_ERRNO = 0xFF,
-};
-
-#endif // NARC_DEFS_ERROR_H
+#endif // NARC_API_DUMP_H

@@ -17,6 +17,7 @@
 #define NARC_H
 
 #include <api/check.h>
+#include <api/dump.h>
 #include <api/error.h>
 #include <api/load.h>
 

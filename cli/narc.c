@@ -51,6 +51,14 @@ int main(void)
     printf("FIMG offset: 0x%02x\n", vfs_ctx.fimg_ofs);
     printf("VFS size:    0x%02x\n", vfs_ctx.vfs_size);
 
+    printf("Trying to dump contents...\n");
+    err = narc_dump(narc, &vfs_ctx, "test.narc.d");
+    if (err != NARCERR_NONE) {
+        fprintf(stderr, "NARC error: %s\n", narc_strerror(err));
+        fflush(stderr);
+        return EXIT_FAILURE;
+    }
+
     free(narc);
     return EXIT_SUCCESS;
 }

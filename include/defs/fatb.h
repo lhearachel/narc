@@ -13,30 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_DEFS_ERROR_H
-#define NARC_DEFS_ERROR_H
+#ifndef NARC_DEFS_FATB_H
+#define NARC_DEFS_FATB_H
 
-enum narc_error {
-    NARCERR_NONE = 0,
+#include <stdint.h>
 
-    NARCERR_MAGIC,
-    NARCERR_BOM,
-    NARCERR_VERSION,
-    NARCERR_FILE_SIZE,
-    NARCERR_HEADER_SIZE,
-    NARCERR_NUM_SECTIONS,
-
-    NARCERR_FATB_MAGIC,
-    NARCERR_FATB_SIZE,
-    NARCERR_FATB_RESERVED,
-
-    NARCERR_FNTB_MAGIC,
-
-    NARCERR_FIMG_MAGIC,
-
-    NARCERR_DUMP_TARGET_IS_FILE,
-
-    NARCERR_ERRNO = 0xFF,
+struct fatb_meta {
+    uint32_t magic;
+    uint32_t size;
+    uint16_t num_files;
+    uint16_t _reserved;
 };
 
-#endif // NARC_DEFS_ERROR_H
+struct fatb_entry {
+    uint32_t start;
+    uint32_t end;
+};
+
+#endif // NARC_DEFS_FATB_H
