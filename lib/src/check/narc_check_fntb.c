@@ -15,8 +15,7 @@
  */
 
 #include <api/check.h>
-
-#define FNTB_MAGIC 0x464E5442
+#include <const/fntb.h>
 
 enum narc_error narc_check_fntb(const unsigned char vfs[], uint32_t *out_size)
 {

@@ -15,12 +15,7 @@
  */
 
 #include <api/check.h>
-
-#define NARC_MAGIC     0x4352414E
-#define LE_BOM         0xFFFE
-#define VERSION_MARKER 0x0100
-#define HEADER_SIZE    16
-#define NUM_SECTIONS   3
+#include <const/header.h>
 
 #define ERROR_NEQ(expect, actual, err) \
     {                                  \
@@ -31,11 +26,11 @@
 
 enum narc_error narc_check_header(const struct narc *narc)
 {
-    ERROR_NEQ(NARC_MAGIC, narc->magic, NARCERR_MAGIC);
-    ERROR_NEQ(LE_BOM, narc->bom, NARCERR_BOM);
-    ERROR_NEQ(VERSION_MARKER, narc->version, NARCERR_VERSION);
-    ERROR_NEQ(HEADER_SIZE, narc->header_size, NARCERR_HEADER_SIZE);
-    ERROR_NEQ(NUM_SECTIONS, narc->num_sections, NARCERR_NUM_SECTIONS);
+    ERROR_NEQ(HEADER_MAGIC, narc->magic, NARCERR_MAGIC);
+    ERROR_NEQ(HEADER_LE_BOM, narc->bom, NARCERR_BOM);
+    ERROR_NEQ(HEADER_VERSION_MARKER, narc->version, NARCERR_VERSION);
+    ERROR_NEQ(HEADER_NUM_SECTIONS, narc->num_sections, NARCERR_NUM_SECTIONS);
+    ERROR_NEQ(sizeof(struct narc), narc->header_size, NARCERR_HEADER_SIZE);
 
     return NARCERR_NONE;
 }

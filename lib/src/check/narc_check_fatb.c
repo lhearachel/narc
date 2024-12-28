@@ -15,10 +15,8 @@
  */
 
 #include <api/check.h>
-
-#define FATB_MAGIC  0x46415442 // Reversed due to cast during validation
-#define HEADER_SIZE 12
-#define ENTRY_SIZE  8
+#include <const/fatb.h>
+#include <defs/fatb.h>
 
 #define ERROR_NEQ(expect, actual, err) \
     {                                  \
@@ -35,7 +33,7 @@ enum narc_error narc_check_fatb(const unsigned char vfs[], uint32_t *out_size)
 
     ERROR_NEQ(FATB_MAGIC, *magic, NARCERR_FATB_MAGIC);
     ERROR_NEQ(0, *num_files >> 16, NARCERR_FATB_RESERVED);
-    ERROR_NEQ((*num_files * ENTRY_SIZE) + HEADER_SIZE, *size, NARCERR_FATB_SIZE);
+    ERROR_NEQ((*num_files * sizeof(struct fatb_entry)) + sizeof(struct fatb_meta), *size, NARCERR_FATB_SIZE);
 
     *out_size = *size;
     return NARCERR_NONE;

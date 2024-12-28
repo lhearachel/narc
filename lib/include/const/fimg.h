@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifndef NARC_CONST_FIMG_H
+#define NARC_CONST_FIMG_H
 
-#include <api/check.h>
-#include <const/fimg.h>
+#define FIMG_MAGIC 0x46494D47
 
-enum narc_error narc_check_fimg(const unsigned char vfs[], uint32_t *out_size)
-{
-    uint32_t *magic = (uint32_t *)vfs;
-    uint32_t *size = (uint32_t *)vfs + 1;
-
-    if (FIMG_MAGIC != *magic) {
-        return NARCERR_FIMG_MAGIC;
-    }
-
-    *out_size = *size;
-    return NARCERR_NONE;
-}
+#endif // NARC_CONST_FIMG_H

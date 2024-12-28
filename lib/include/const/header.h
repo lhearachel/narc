@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifndef NARC_CONST_HEADER_H
+#define NARC_CONST_HEADER_H
 
-#include <api/check.h>
-#include <const/fimg.h>
+#define HEADER_MAGIC          0x4352414E
+#define HEADER_LE_BOM         0xFFFE
+#define HEADER_VERSION_MARKER 0x0100
+#define HEADER_NUM_SECTIONS   3
 
-enum narc_error narc_check_fimg(const unsigned char vfs[], uint32_t *out_size)
-{
-    uint32_t *magic = (uint32_t *)vfs;
-    uint32_t *size = (uint32_t *)vfs + 1;
-
-    if (FIMG_MAGIC != *magic) {
-        return NARCERR_FIMG_MAGIC;
-    }
-
-    *out_size = *size;
-    return NARCERR_NONE;
-}
+#endif // NARC_CONST_HEADER_H
