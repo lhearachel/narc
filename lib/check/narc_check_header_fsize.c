@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_DEFS_NARC_H
-#define NARC_DEFS_NARC_H
 
-#include <stdint.h>
+#include <api/check.h>
 
-struct narc {
-    uint32_t magic;
-    uint16_t bom;
-    uint16_t version;
-    uint32_t size;
-    uint16_t header_size;
-    uint16_t num_sections;
-    unsigned char vfs[];
-};
+enum narc_error narc_check_header_fsize(const struct narc *narc, const size_t fsize)
+{
+    enum narc_error err = narc->size != fsize ? NARCERR_FILE_SIZE : NARCERR_NONE;
+    if (err != NARCERR_NONE) {
+        return err;
+    }
 
-#endif // NARC_DEFS_NARC_H
+    return narc_check_header(narc);
+}

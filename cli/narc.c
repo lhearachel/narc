@@ -26,7 +26,9 @@
 int main(void)
 {
     struct narc *narc = NULL;
-    enum narc_error err = narc_load("test.narc", &narc);
+    size_t vfs_sizes[3];
+
+    enum narc_error err = narc_load("test.narc", &narc, vfs_sizes);
     if (err == NARCERR_ERRNO) {
         fprintf(stderr, "System error: %s\n", strerror(errno));
         fflush(stderr);
@@ -41,9 +43,12 @@ int main(void)
     printf("NARC size: %d\n", narc->size);
     printf("NARC data sample:");
     for (int i = 0; i < 16; i++) {
-        printf(" %02x", narc->data[i]);
+        printf(" %02x", narc->vfs[i]);
     }
     printf("\n");
+    printf("FATB offset: 0x%02zx\n", 0l);
+    printf("FNTB offset: 0x%02zx\n", vfs_sizes[0]);
+    printf("FIMG offset: 0x%02zx\n", vfs_sizes[0] + vfs_sizes[1]);
 
     free(narc);
     return EXIT_SUCCESS;

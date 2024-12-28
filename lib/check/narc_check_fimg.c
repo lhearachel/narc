@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_DEFS_NARC_H
-#define NARC_DEFS_NARC_H
 
-#include <stdint.h>
+#include <api/check.h>
 
-struct narc {
-    uint32_t magic;
-    uint16_t bom;
-    uint16_t version;
-    uint32_t size;
-    uint16_t header_size;
-    uint16_t num_sections;
-    unsigned char vfs[];
-};
+#define FIMG_MAGIC 0x46494D47
 
-#endif // NARC_DEFS_NARC_H
+enum narc_error narc_check_fimg(const unsigned char vfs[], size_t *out_size)
+{
+    uint32_t *magic = (uint32_t *)vfs;
+    uint32_t *size = (uint32_t *)vfs + 1;
+
+    if (FIMG_MAGIC != *magic) {
+        return NARCERR_FIMG_MAGIC;
+    }
+
+    *out_size = *size;
+    return NARCERR_NONE;
+}

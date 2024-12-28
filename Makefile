@@ -16,7 +16,7 @@ TARGET = $(shell basename $(CURDIR))
 CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
 CFLAGS += -Iinclude
 
-LIB_APIS = error load
+LIB_APIS = check error load
 
 LIB_SRC = $(foreach api,$(LIB_APIS),$(wildcard lib/$(api)/*.c))
 CLI_SRC = $(wildcard cli/*.c)

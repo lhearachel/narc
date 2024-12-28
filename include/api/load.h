@@ -19,11 +19,16 @@
 #include <defs/error.h>
 #include <defs/narc.h>
 
+#include <stddef.h>
+
 /*
  * Load a NARC from an existing file at the given path. If the file contents
  * validate as a NARC, then `out_narc` will be set to an address with sufficient
  * memory allocation to hold the entire file. The calling client is responsible
- * for freeing this allocation.
+ * for freeing this allocation. Additionally, the 3-element array at
+ * `out_vfs_sizes` will be populated with the sizes of the individual sections
+ * in order (FATB, FNTB, FIMG). The calling client is responsible for providing
+ * the memory space for `out_vfs_sizes`.
  *
  * Any of the following error codes may be emitted:
  *
@@ -40,6 +45,6 @@
  *                             header did not match expectations.
  *  - `NARCERR_ERRNO`        - A system-level error occurred; consult `errno`.
  */
-enum narc_error narc_load(const char *file_path, struct narc **out_narc);
+enum narc_error narc_load(const char *file_path, struct narc **out_narc, size_t out_vfs_sizes[3]);
 
 #endif // NARC_API_LOAD_H

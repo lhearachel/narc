@@ -13,11 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_H
-#define NARC_H
 
 #include <api/check.h>
-#include <api/error.h>
-#include <api/load.h>
 
-#endif // NARC_H
+#define ERROR_RET(expect, actual)           \
+    {                                       \
+        if ((ret = (actual)) != (expect)) { \
+            return ret;                     \
+        }                                   \
+    }
+
+enum narc_error narc_check_vfs(const struct narc *narc, size_t out_sizes[3])
+{
+    enum narc_error ret;
+    ERROR_RET(NARCERR_NONE, narc_check_fatb(narc->vfs, out_sizes));
+    ERROR_RET(NARCERR_NONE, narc_check_fntb(narc->vfs + out_sizes[0], &out_sizes[1]));
+    ERROR_RET(NARCERR_NONE, narc_check_fimg(narc->vfs + out_sizes[1] + out_sizes[0], &out_sizes[2]));
+
+    return NARCERR_NONE;
+}
