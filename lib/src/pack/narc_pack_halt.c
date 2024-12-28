@@ -13,29 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_DEFS_VFS_H
-#define NARC_DEFS_VFS_H
 
-#include <stdint.h>
+#include <api/pack.h>
 
-struct vfs_ctx {
-    uint32_t fatb_ofs;
-    uint32_t fntb_ofs;
-    uint32_t fimg_ofs;
-    uint32_t vfs_size;
-};
+#include <stdlib.h>
 
-struct vfs_file {
-    struct vfs_file *next;
-    unsigned char *image;
-    uint32_t size;
-};
+void narc_pack_halt(struct vfs_pack_ctx *ctx)
+{
+    struct vfs_file *next, *curr = ctx->head;
 
-struct vfs_pack_ctx {
-    struct vfs_file *head;
-    struct vfs_file *tail;
-    uint16_t count;
-    uint32_t size;
-};
+    while (curr != NULL) {
+        next = curr->next;
+        free(curr->image);
+        free(curr);
+        curr = next;
+    }
 
-#endif // NARC_DEFS_VFS_H
+    free(ctx);
+}

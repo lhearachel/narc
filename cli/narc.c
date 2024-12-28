@@ -22,6 +22,8 @@
 #include <string.h>
 
 #include <narc.h>
+#include "api/pack.h"
+#include "defs/vfs.h"
 
 int main(void)
 {
@@ -59,6 +61,41 @@ int main(void)
         return EXIT_FAILURE;
     }
 
+    printf("Starting re-pack...\n");
+    struct vfs_pack_ctx *pack_ctx = narc_pack_start();
+    for (int i = 0; i < 8; i++) {
+        char buf[18];
+        sprintf(buf, "test.narc.d/%05d", i);
+        printf("Reading file: %s... ", buf);
+
+        FILE *f = fopen(buf, "rb");
+        if (f == NULL) {
+            narc_pack_halt(pack_ctx);
+            fprintf(stderr, "Failed to open file for reading: %s\n", buf);
+            fflush(stderr);
+            return EXIT_FAILURE;
+        }
+
+        fseek(f, 0, SEEK_END);
+        size_t fsize = ftell(f);
+        fseek(f, 0, SEEK_SET);
+        printf("-> size = %zu\n", fsize);
+
+        unsigned char *image = malloc(fsize);
+        fread(image, 1, fsize, f);
+        fclose(f);
+
+        narc_pack_file(pack_ctx, image, fsize);
+    }
+
+    struct narc *repack = narc_pack(pack_ctx);
+
+    printf("Re-pack successful!\n");
+    FILE *f = fopen("repack.narc", "wb");
+    fwrite(repack, 1, repack->size, f);
+    fclose(f);
+
+    free(repack);
     free(narc);
     return EXIT_SUCCESS;
 }

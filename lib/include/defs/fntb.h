@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_DEFS_VFS_H
-#define NARC_DEFS_VFS_H
+#ifndef NARC_DEFS_FNTB_H
+#define NARC_DEFS_FNTB_H
 
 #include <stdint.h>
 
-struct vfs_ctx {
-    uint32_t fatb_ofs;
-    uint32_t fntb_ofs;
-    uint32_t fimg_ofs;
-    uint32_t vfs_size;
-};
-
-struct vfs_file {
-    struct vfs_file *next;
-    unsigned char *image;
+struct fntb_meta {
+    uint32_t magic;
     uint32_t size;
 };
 
-struct vfs_pack_ctx {
-    struct vfs_file *head;
-    struct vfs_file *tail;
-    uint16_t count;
-    uint32_t size;
+struct fntb_main_entry {
+    uint32_t subt_offset;
+    uint16_t first_file;
+    uint16_t directory;
 };
 
-#endif // NARC_DEFS_VFS_H
+#endif // NARC_DEFS_FNTB_H
