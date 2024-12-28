@@ -23,7 +23,7 @@ check-dep-exists:
 
 format: DEP_TARGET=clang-format
 format: .clang-format check-dep-exists
-	clang-format -i --style=file $(SRC) $(INC)
+	clang-format -i --style=file $(ALLSRC) $(ALLINC)
 
 pre-commit: DEP_TARGET=pre-commit
 pre-commit: .pre-commit-config.yaml check-dep-exists

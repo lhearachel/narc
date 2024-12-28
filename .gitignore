@@ -3,6 +3,7 @@
 *.d
 *.exe
 *.out
+*.so
 /narc
 build/*
 

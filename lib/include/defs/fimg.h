@@ -23,4 +23,9 @@ struct fimg_meta {
     uint32_t size;
 };
 
+struct fimg {
+    uint32_t size;
+    unsigned char image[];
+};
+
 #endif // NARC_DEFS_FIMG_H
