@@ -61,9 +61,3 @@ int main(int argc, const char **argv)
     // Special case in help which jumps straight to printing error text
     return help(-1, argv);
 }
-
-bool match_either(const char *s, const char *a, const char *b)
-{
-    return (a != NULL && strcmp(s, a) == 0)
-        || (b != NULL && strcmp(s, b) == 0);
-}
