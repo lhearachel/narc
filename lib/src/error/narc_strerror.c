@@ -15,6 +15,9 @@
  */
 #include <api/error.h>
 
+#include <errno.h>
+#include <string.h>
+
 const char *narc_strerror(enum narc_error error)
 {
     switch (error) {
@@ -22,7 +25,7 @@ const char *narc_strerror(enum narc_error error)
     case NARCERR_NONE:
         return "(null)";
     case NARCERR_ERRNO:
-        return "Standard error; refer to errno for details";
+        return strerror(errno);
     case NARCERR_MAGIC:
         return "Invalid magic marker in NARC header";
     case NARCERR_BOM:
