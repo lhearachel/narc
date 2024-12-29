@@ -15,6 +15,7 @@
  */
 
 #include <api/dump.h>
+#include <api/files.h>
 #include <defs/fatb.h>
 #include <defs/fimg.h>
 
@@ -44,10 +45,12 @@ enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx
     uint32_t fatb_entry_start = vfs_ctx->fatb_ofs + sizeof(struct fatb_meta);
     uint32_t fimg_entry_start = vfs_ctx->fimg_ofs + sizeof(struct fimg_meta);
 
-    //                                         ------------ path separator
-    //                                         |   -------- 6-digits for file ID
-    //                                         v   v   v--- null terminator
-    char *fname_buf = malloc(strlen(dst_dir) + 1 + 6 + 1);
+    //                 ------------ path separator
+    //                 |   -------- 6-digits for file ID
+    //                 v   v
+    size_t fname_len = 1 + 6 + strlen(dst_dir) + MAX_EXT_LEN;
+
+    char *fname_buf = malloc(fname_len + 1);
     if (fname_buf == NULL) {
         return NARCERR_ERRNO;
     }
@@ -55,20 +58,20 @@ enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx
     strcpy(fname_buf, dst_dir);
     char *fname_bufp = fname_buf + strlen(dst_dir);
     fname_bufp[0] = '/';
-    fname_bufp[7] = '\0';
+    fname_bufp[fname_len] = '\0';
 
     for (int i = 0; i < fatb_meta->num_files; i++) {
         struct fatb_entry *entry = (struct fatb_entry *)(narc->vfs + fatb_entry_start + (sizeof(struct fatb_entry) * i));
         const unsigned char *fimage = narc->vfs + fimg_entry_start + entry->start;
-        uint32_t fimage_len = entry->end - entry->start;
-        sprintf(&fname_bufp[1], "%05d", i);
+        const char *ext = narc_files_getext((const char *)fimage);
+        sprintf(&fname_bufp[1], "%05d%s", i, ext);
 
         FILE *fout = fopen(fname_buf, "wb");
         if (fout == NULL) {
             return NARCERR_ERRNO;
         }
 
-        fwrite(fimage, sizeof(unsigned char), fimage_len, fout);
+        fwrite(fimage, sizeof(unsigned char), entry->end - entry->start, fout);
         fclose(fout);
     }
 
