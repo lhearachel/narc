@@ -30,7 +30,7 @@ static const char *commands = ""
     "Commands:\n"
     "  c, create    Create a NARC from a folder of physical files\n"
     "  x, extract   Extract virtual files from the NARC to a folder\n"
-    "  y, yank      Yank individiaul files from the NARC to disk\n"
+    "  y, yank      Yank individual files from the NARC to disk\n"
     "  i, info      Print metadata for a NARC\n"
     "  h, help      Print help-text for a particular command"
     "";

@@ -19,6 +19,7 @@
 #include <stdbool.h>
 
 bool match_either(const char *s, const char *a, const char *b);
+char *basename(const char *path);
 
 // NOTE: This routine performs a string allocation! The calling client is
 // responsible for freeing the result when they are finished with it!

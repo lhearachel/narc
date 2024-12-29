@@ -23,6 +23,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+char *basename(const char *path)
+{
+    char *p = strrchr(path, '/');
+    return p ? p : (char *)path;
+}
+
 char *basename_extend(const char *path, const char *ext)
 {
     char *p = strrchr(path, '/');
