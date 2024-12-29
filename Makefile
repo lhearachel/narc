@@ -21,7 +21,7 @@ CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
 # TODO: This will need to be changed when building for installation
 CFLAGS += -Ilib/include
 
-LIBAPI = check dump error load pack
+LIBAPI = check dump error files load pack
 LIBINC = $(wildcard lib/include/*.h) $(wildcard lib/include/*/*.h)
 LIBSRC = $(foreach api,$(LIBAPI),$(wildcard lib/src/$(api)/*.c))
 LIBOBJ = $(LIBSRC:.c=.o)

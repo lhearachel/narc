@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "api/error.h"
+#include "api/files.h"
 #include "api/load.h"
 #include "defs/fatb.h"
 #include "defs/fimg.h"
@@ -66,7 +67,7 @@ int info(int argc, const char **argv)
     printf("Member files:\n");
 
     for (size_t i = 0; i < fatb_meta->num_files; i++, fatb++) {
-        char *ext = guess_extension(fimg + fatb->start);
+        char *ext = narc_files_getext(fimg + fatb->start);
         printf("  - %05ld -> { start = 0x%08X, size = 0x%08X, filetype = %-8s }\n", i, fatb->start, fatb->end - fatb->start, ext);
         free(ext);
     }
