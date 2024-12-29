@@ -10,7 +10,6 @@
 #include "defs/narc.h"
 #include "defs/vfs.h"
 
-#include "command.h"
 #include "utils.h"
 
 // clang-format off
@@ -26,7 +25,7 @@ static const char *notes = ""
 static const char *options = ""
     "Options:\n"
     "  -o, --output <FILE>  Persist the output to FILE. By default, output is\n"
-    "                       written to <DIRECTORY>.narc.\n"
+    "                       written to “DIRECTORY.narc”.\n"
     "  --naix               Create a Nitro Archive Index (NAIX) header. The output\n"
     "                       NAIX will have the same file-stem as the output NARC.\n"
     "  --order <FILE>       Read lines from FILE as filepaths in DIRECTORY which\n"
@@ -48,7 +47,6 @@ struct options {
 };
 
 static int parse_opts(int *argc, const char ***argv, struct options *opts);
-static char *narcname(const char *path);
 
 int create(int argc, const char **argv)
 {
@@ -74,7 +72,7 @@ int create(int argc, const char **argv)
 
     opts.input = *argv;
     if (opts.output == NULL) {
-        opts.output = narcname(opts.input);
+        opts.output = basename_extend(opts.input, "narc");
     }
 
     DIR *dir = opendir(opts.input);
@@ -182,16 +180,4 @@ static int parse_opts(int *argc, const char ***argv, struct options *opts)
     }
 
     return orig_argv - *argv;
-}
-
-static char *narcname(const char *path)
-{
-    char *p = strrchr(path, '/');
-    if (p == NULL) {
-        p = (char *)path;
-    }
-
-    char *buf = malloc(strlen(p) + 6);
-    sprintf(buf, "%s.narc", p);
-    return buf;
 }

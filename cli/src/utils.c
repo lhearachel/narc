@@ -31,7 +31,7 @@ char *guess_extension(const char *data)
         // the extension, then fall back to the default (".bin").
         char *encoded_ext = guess_extension(data + 5);
 
-        // We get back the leading dot by default.
+        // The value returned by the recursed call already has the `.` prefix.
         assert(strlen(encoded_ext) < 6);
         if (strcmp(encoded_ext, ".bin") != 0) {
             sprintf(buf, "%s.lz", encoded_ext);
@@ -48,6 +48,18 @@ char *guess_extension(const char *data)
         }
     }
 
+    return buf;
+}
+
+char *basename_extend(const char *path, const char *ext)
+{
+    char *p = strrchr(path, '/');
+    if (p == NULL) {
+        p = (char *)path;
+    }
+
+    char *buf = malloc(strlen(p) + strlen(ext) + 2);
+    sprintf(buf, "%s.%s", p, ext);
     return buf;
 }
 
