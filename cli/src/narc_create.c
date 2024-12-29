@@ -1,5 +1,6 @@
 #include <dirent.h>
 #include <errno.h>
+#include <libgen.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,6 +47,7 @@ struct options {
 };
 
 static int parse_opts(int *argc, const char ***argv, struct options *opts);
+static char *narcname(const char *path);
 
 int create(int argc, const char **argv)
 {
@@ -56,10 +58,10 @@ int create(int argc, const char **argv)
 
     struct options opts = {
         .input = NULL,
-        .output = "output.narc", // TODO: Adapt output from input by default
-        .naix = false,           // TODO: Construct NAIX header during packing
-        .order = NULL,           // TODO: Read entries from order file
-        .ignore = NULL,          // TODO: Read entries from ignore file
+        .output = NULL,
+        .naix = false,  // TODO: Construct NAIX header during packing
+        .order = NULL,  // TODO: Read entries from order file
+        .ignore = NULL, // TODO: Read entries from ignore file
     };
     parse_opts(&argc, &argv, &opts);
 
@@ -70,6 +72,10 @@ int create(int argc, const char **argv)
     }
 
     opts.input = *argv;
+    if (opts.output == NULL) {
+        opts.output = narcname(opts.input);
+    }
+
     DIR *dir = opendir(opts.input);
     if (dir == NULL) {
         fprintf(stderr, "narc create: could not open DIRECTORY “%s”: %s\n", opts.input, strerror(errno));
@@ -175,4 +181,16 @@ static int parse_opts(int *argc, const char ***argv, struct options *opts)
     }
 
     return orig_argv - *argv;
+}
+
+static char *narcname(const char *path)
+{
+    char *p = strrchr(path, '/');
+    if (p == NULL) {
+        p = (char *)path;
+    }
+
+    char *buf = malloc(strlen(p) + 6);
+    sprintf(buf, "%s.narc", p);
+    return buf;
 }
