@@ -20,5 +20,6 @@
 #include <api/dump.h>
 #include <api/error.h>
 #include <api/load.h>
+#include <api/pack.h>
 
 #endif // NARC_H
