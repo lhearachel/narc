@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 <lhearachel@proton.me>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +26,6 @@
 #include "defs/fntb.h"
 #include "defs/vfs.h"
 
-#include "command.h"
 #include "utils.h"
 
 // clang-format off
@@ -20,6 +35,7 @@ static const char *usage = "Usage: narc info [-h | --help] FILE\n";
 
 static const char *notes = ""
     "The following global metadata is extracted and output to the console:\n"
+    "\n"
     "  1. The total size of the NARC (in bytes)\n"
     "  2. The byte-offsets of each virtual filesystem sections\n"
     "  3. The count of member files in the NARC\n"
@@ -27,6 +43,7 @@ static const char *notes = ""
     "     be at LEAST 1 for the virtual root\n"
     "\n"
     "Additionally, for each member file, the following metadata will be output:\n"
+    "\n"
     "  1. The byte-offset of the start of the file image (its byte data)\n"
     "  2. The size of the file image\n"
     "  3. A recognized file-type (or “.bin”, if the file-type is not recognized)\n"
