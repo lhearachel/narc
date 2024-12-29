@@ -1,6 +1,7 @@
-#include "extensions.h"
+#include "utils.h"
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,4 +49,10 @@ char *guess_extension(const char *data)
     }
 
     return buf;
+}
+
+bool match_either(const char *s, const char *a, const char *b)
+{
+    return (a != NULL && strcmp(s, a) == 0)
+        || (b != NULL && strcmp(s, b) == 0);
 }

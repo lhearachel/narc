@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "command.h"
+#include "utils.h"
 
 // clang-format off
 static const char *tag_line = "narc - create, extract, and explore Nitro Archive virtual filesystems\n";

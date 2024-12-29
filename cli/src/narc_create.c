@@ -1,9 +1,9 @@
 #include <dirent.h>
 #include <errno.h>
-#include <libgen.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "api/pack.h"
@@ -11,6 +11,7 @@
 #include "defs/vfs.h"
 
 #include "command.h"
+#include "utils.h"
 
 // clang-format off
 static const char *tag_line = "narc create - create a NARC from a folder of physical files\n";

@@ -10,7 +10,7 @@
 #include "defs/vfs.h"
 
 #include "command.h"
-#include "extensions.h"
+#include "utils.h"
 
 // clang-format off
 static const char *tag_line = "narc info - print metadata for a NARC\n";
