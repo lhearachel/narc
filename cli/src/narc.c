@@ -23,29 +23,17 @@
 
 #include "command.h"
 
-static bool match_opt(const char *opt, const char *shortopt, const char *longopt);
-
 // clang-format off
-static const struct command handlers[] = {
+const struct command handlers[] = {
     { "c", "create",  create  },
     { "x", "extract", extract },
     { "y", "yank",    yank    },
     { "i", "info",    info    },
+    { "h", "help",    help    },
+    { 0 },
 };
 
 static const char *version = "0.1.0";
-
-static const char *tag_line = "narc - create, extract, and explore Nitro Archive virtual filesystems\n";
-
-static const char *short_usage = "Usage: narc [-h | --help] [-v | --version] [command] [arguments]\n";
-
-static const char *commands = ""
-    "Commands:\n"
-    "  c, create    Create a NARC from a folder of physical files\n"
-    "  x, extract   Extract virtual files from the NARC to a folder\n"
-    "  y, yank      Yank individiaul files from the NARC to disk\n"
-    "  i, info      Print diagnostics about a NARC"
-    "";
 // clang-format on
 
 int main(int argc, const char **argv)
@@ -53,31 +41,29 @@ int main(int argc, const char **argv)
     argc--;
     argv++;
 
-    if (argc == 0 || match_opt(*argv, "-h", "--help")) {
-        fprintf(stdout, "%s\n%s\n%s\n", tag_line, short_usage, commands);
-        return EXIT_SUCCESS;
+    if (argc == 0 || match_either(*argv, "-h", "--help")) {
+        return help(0, argv);
     }
 
-    if (match_opt(*argv, "-v", "--version")) {
+    if (match_either(*argv, "-v", "--version")) {
         fprintf(stdout, "%s\n", version);
         return EXIT_SUCCESS;
     }
 
-    for (size_t i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++) {
-        if (match_opt(*argv, handlers[i].abbrev, handlers[i].name)) {
+    for (size_t i = 0; handlers[i].abbrev[0] != '\0'; i++) {
+        if (match_either(*argv, handlers[i].abbrev, handlers[i].name)) {
             argc--;
             argv++;
             return handlers[i].main(argc, argv);
         }
     }
 
-    fprintf(stderr, "narc: Unrecognized command “%s”\n", *argv);
-    fprintf(stderr, "%s\n%s\n", short_usage, commands);
-    return EXIT_FAILURE;
+    // Special case in help which jumps straight to printing error text
+    return help(-1, argv);
 }
 
-static bool match_opt(const char *opt, const char *shortopt, const char *longopt)
+bool match_either(const char *s, const char *a, const char *b)
 {
-    return (shortopt != NULL && strcmp(opt, shortopt) == 0)
-        || (longopt != NULL && strcmp(opt, longopt) == 0);
+    return (a != NULL && strcmp(s, a) == 0)
+        || (b != NULL && strcmp(s, b) == 0);
 }
