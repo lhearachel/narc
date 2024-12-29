@@ -50,5 +50,7 @@ const char *narc_strerror(enum narc_error error)
         return "Invalid magic marker in FIMG section";
     case NARCERR_DUMP_TARGET_IS_FILE:
         return "A file with the given name already exists";
+    case NARCERR_FILES_OUT_OF_RANGE:
+        return "The requested file index is out of range";
     }
 }

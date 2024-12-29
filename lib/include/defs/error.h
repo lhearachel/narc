@@ -36,6 +36,8 @@ enum narc_error {
 
     NARCERR_DUMP_TARGET_IS_FILE,
 
+    NARCERR_FILES_OUT_OF_RANGE,
+
     NARCERR_ERRNO = 0xFF,
 };
 

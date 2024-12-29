@@ -16,6 +16,10 @@
 #ifndef NARC_API_FILES_H
 #define NARC_API_FILES_H
 
+#include <defs/error.h>
+#include <defs/narc.h>
+#include <defs/vfs.h>
+
 /*
  * The maximum string length of any extension which may be returned by
  * `narc_files_getext`.
@@ -30,5 +34,12 @@
  * allocation.
  */
 char *narc_files_getext(const char *data);
+
+/*
+ * Return a pointer to the file image corresponding to the input index, if any
+ * exists. On success, `out_image` will be assigned to the location of said file
+ * image, and `out_size` will be assigned to the size of that image (in bytes).
+ */
+enum narc_error narc_files_getimg(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const uint16_t file_idx, const unsigned char **out_image, uint32_t *out_size);
 
 #endif // NARC_API_FILES_H
