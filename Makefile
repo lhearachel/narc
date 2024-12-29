@@ -27,7 +27,8 @@ LIBSRC = $(foreach api,$(LIBAPI),$(wildcard lib/src/$(api)/*.c))
 LIBOBJ = $(LIBSRC:.c=.o)
 LIBDEP = $(LIBSRC:.c=.d)
 
-CLISRC = $(wildcard cli/*.c)
+CLIINC = $(wildcard cli/include/*.h)
+CLISRC = $(wildcard cli/src/*.c)
 CLIOBJ = $(CLISRC:.c=.o)
 CLIDEP = $(CLISRC:.c=.d)
 
@@ -59,6 +60,7 @@ clean:
 $(CLITARGET): LDFLAGS += -Wl,-rpath=$(CURDIR)
 $(CLITARGET): LDFLAGS += -L$(CURDIR)
 $(CLITARGET): LDFLAGS += -l$(CWD_BASE)
+$(CLITARGET): CFLAGS += -Icli/include
 $(CLITARGET): $(CLIOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
