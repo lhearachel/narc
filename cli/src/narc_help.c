@@ -14,7 +14,7 @@ static const char *commands = ""
     "  c, create    Create a NARC from a folder of physical files\n"
     "  x, extract   Extract virtual files from the NARC to a folder\n"
     "  y, yank      Yank individiaul files from the NARC to disk\n"
-    "  i, info      Print diagnostics about a NARC\n"
+    "  i, info      Print metadata for a NARC\n"
     "  h, help      Print help-text for a particular command"
     "";
 // clang-format on
@@ -30,7 +30,7 @@ int help(int argc, const char **argv)
         return EXIT_SUCCESS;
     }
 
-    for (size_t i = 0; handlers[i].abbrev[0] != '\0'; i++) {
+    for (size_t i = 0; handlers[i].abbrev != NULL; i++) {
         if (match_either(*argv, handlers[i].abbrev, handlers[i].name)) {
             return handlers[i].main(0, argv);
         }
