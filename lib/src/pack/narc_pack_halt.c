@@ -20,6 +20,10 @@
 
 void narc_pack_halt(struct vfs_pack_ctx *ctx)
 {
+    if (ctx == NULL) {
+        return;
+    }
+
     struct vfs_file *next, *curr = ctx->head;
 
     while (curr != NULL) {

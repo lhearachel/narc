@@ -66,6 +66,12 @@ static int parse_opts(int *argc, const char ***argv, struct options *opts);
 
 int create(int argc, const char **argv)
 {
+    DIR *dir = NULL;
+    FILE *fout = NULL;
+    char *cwd = NULL;
+    struct narc *narc = NULL;
+    struct vfs_pack_ctx *ctx = NULL;
+
     if (argc == 0 || match_either(*argv, "-h", "--help")) {
         printf("%s\n%s\n%s\n%s\n", tag_line, short_usage, notes, options);
         return EXIT_SUCCESS;
@@ -91,23 +97,20 @@ int create(int argc, const char **argv)
         opts.output = basename_extend(opts.input, "narc");
     }
 
-    DIR *dir = opendir(opts.input);
+    dir = opendir(opts.input);
     if (dir == NULL) {
-        fprintf(stderr, "narc create: could not open DIRECTORY “%s”: %s\n", opts.input, strerror(errno));
-        return EXIT_FAILURE;
+        FAIL("narc create: could not open DIRECTORY “%s”: %s\n", opts.input, strerror(errno));
     }
 
-    char *cwd = NULL;
     cwd = getcwd(cwd, 0);
     if (cwd == NULL) {
-        fprintf(stderr, "narc create: could not get current working directory: %s\n", strerror(errno));
-        return EXIT_FAILURE;
+        FAIL("narc create: could not get current working directory: %s\n", strerror(errno));
     }
 
     chdir(opts.input);
     errno = 0;
     struct dirent *entry;
-    struct vfs_pack_ctx *ctx = narc_pack_start();
+    ctx = narc_pack_start();
     while (dir && (entry = readdir(dir)) != NULL) {
         if (match_either(entry->d_name, ".", "..")) {
             continue;
@@ -115,10 +118,7 @@ int create(int argc, const char **argv)
 
         FILE *f = fopen(entry->d_name, "rb");
         if (f == NULL) {
-            fprintf(stderr, "narc create: error while opening file “%s”: %s\n", entry->d_name, strerror(errno));
-            closedir(dir);
-            narc_pack_halt(ctx);
-            return EXIT_FAILURE;
+            FAIL("narc create: error while opening file “%s”: %s\n", entry->d_name, strerror(errno));
         }
 
         fseek(f, 0, SEEK_END);
@@ -127,24 +127,19 @@ int create(int argc, const char **argv)
 
         unsigned char *image = malloc(fsize);
         if (image == NULL) {
-            fprintf(stderr, "narc create: error while reading file “%s”: %s\n", entry->d_name, strerror(errno));
-            fclose(f);
-            closedir(dir);
-            narc_pack_halt(ctx);
-            return EXIT_FAILURE;
+            FAIL("narc create: error while reading file “%s”: %s\n", entry->d_name, strerror(errno));
         }
 
         fread(image, 1, fsize, f);
         narc_pack_file(ctx, image, fsize);
     }
 
-    struct narc *narc = narc_pack(ctx);
+    narc = narc_pack(ctx);
 
     chdir(cwd);
-    FILE *fout = fopen(opts.output, "wb");
+    fout = fopen(opts.output, "wb");
     if (fout == NULL) {
-        fprintf(stderr, "narc create: error while reading DIRECTORY “%s”: %s\n", opts.input, strerror(errno));
-        return EXIT_FAILURE;
+        FAIL("narc create: error while reading DIRECTORY “%s”: %s\n", opts.input, strerror(errno));
     }
 
     fwrite(narc, narc->size, 1, fout);
@@ -154,6 +149,19 @@ int create(int argc, const char **argv)
     fclose(fout);
     closedir(dir);
     return EXIT_SUCCESS;
+
+fail:
+    if (fout) {
+        fclose(fout);
+    }
+
+    if (dir) {
+        closedir(dir);
+    }
+
+    free(cwd);
+    free(narc);
+    return EXIT_FAILURE;
 }
 
 static int parse_opts(int *argc, const char ***argv, struct options *opts)

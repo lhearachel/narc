@@ -18,6 +18,15 @@
 
 #include <stdbool.h>
 
+// Standard failure macro. `fail` should be implemented for all commands
+// as an end-state where any potentially-allocated memory is freed and the
+// routine returns EXIT_FAILURE.
+#define FAIL(msgfmt, ...)                     \
+    {                                         \
+        fprintf(stderr, msgfmt, __VA_ARGS__); \
+        goto fail;                            \
+    }
+
 bool match_either(const char *s, const char *a, const char *b);
 char *basename(const char *path);
 

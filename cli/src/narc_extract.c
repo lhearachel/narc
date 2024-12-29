@@ -41,12 +41,6 @@ static const char *options = ""
     "";
 // clang-format on
 
-#define FAIL(msgfmt, ...)                     \
-    {                                         \
-        fprintf(stderr, msgfmt, __VA_ARGS__); \
-        goto fail;                            \
-    }
-
 static int parse_opts(int *argc, const char ***argv, char **output);
 
 int extract(int argc, const char **argv)

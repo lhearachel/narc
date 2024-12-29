@@ -55,17 +55,17 @@ static const char *notes = ""
 
 int info(int argc, const char **argv)
 {
+    struct narc *narc = NULL;
+
     if (argc == 0 || match_either(*argv, "-h", "--help")) {
         printf("%s\n%s\n%s\n", tag_line, usage, notes);
         return EXIT_SUCCESS;
     }
 
-    struct narc *narc = NULL;
     struct vfs_ctx vfs_ctx = {0};
     enum narc_error err = narc_load(*argv, &narc, &vfs_ctx);
     if (err != NARCERR_NONE) {
-        fprintf(stderr, "narc info: could not load FILE “%s”: %s\n", *argv, narc_strerror(err));
-        return EXIT_FAILURE;
+        FAIL("narc info: could not load FILE “%s”: %s\n", *argv, narc_strerror(err));
     }
 
     struct fatb_meta *fatb_meta = (struct fatb_meta *)(narc->vfs + vfs_ctx.fatb_ofs);
@@ -90,4 +90,8 @@ int info(int argc, const char **argv)
     }
 
     return EXIT_SUCCESS;
+
+fail:
+    free(narc);
+    return EXIT_FAILURE;
 }

@@ -47,12 +47,6 @@ static const char *options = ""
     "";
 // clang-format on
 
-#define FAIL(msgfmt, ...)                     \
-    {                                         \
-        fprintf(stderr, msgfmt, __VA_ARGS__); \
-        goto fail;                            \
-    }
-
 static int parse_opts(int *argc, const char ***argv, char **output);
 static char *output_name(const char *input_file, const char *fimg, const uint32_t file_idx);
 
