@@ -180,6 +180,7 @@ static int pack(struct options *opts)
 
         fread(image, 1, fsize, f);
         narc_pack_file(ctx, image, fsize);
+        fclose(f);
     }
     narc = narc_pack(ctx);
     chdir(cwd);
