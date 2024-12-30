@@ -118,7 +118,7 @@ int create(int argc, const char **argv)
 
         FILE *f = fopen(entry->d_name, "rb");
         if (f == NULL) {
-            FAIL("narc create: error while opening file “%s”: %s\n", entry->d_name, strerror(errno));
+            FAIL("narc create: error while opening file “%s” for reading: %s\n", entry->d_name, strerror(errno));
         }
 
         fseek(f, 0, SEEK_END);
@@ -139,7 +139,7 @@ int create(int argc, const char **argv)
     chdir(cwd);
     fout = fopen(opts.output, "wb");
     if (fout == NULL) {
-        FAIL("narc create: error while reading DIRECTORY “%s”: %s\n", opts.input, strerror(errno));
+        FAIL("narc create: error while opening file “%s” for writing: %s\n", opts.output, strerror(errno));
     }
 
     fwrite(narc, narc->size, 1, fout);
@@ -190,16 +190,8 @@ static int parse_opts(int *argc, const char ***argv, struct options *opts)
             opts->output = arg;
         } else if (match_either(opt, NULL, "--order")) {
             opts->order = arg;
-            if (access(arg, F_OK) != 0) {
-                fprintf(stderr, "narc create: file arg “%s” to option “--order” does not exist\n", arg);
-                return EXIT_FAILURE;
-            }
         } else if (match_either(opt, NULL, "--ignore")) {
             opts->ignore = arg;
-            if (access(arg, F_OK) != 0) {
-                fprintf(stderr, "narc create: file arg “%s” to option “--ignore” does not exist\n", arg);
-                return EXIT_FAILURE;
-            }
         }
     }
 

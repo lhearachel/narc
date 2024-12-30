@@ -80,7 +80,7 @@ int yank(int argc, const char **argv)
     struct vfs_ctx vfs_ctx = {0};
     enum narc_error err = narc_load(input_file, &narc, &vfs_ctx);
     if (err != NARCERR_NONE) {
-        fprintf(stderr, "narc yank: could not load FILE “%s”: %s\n", *argv, narc_strerror(err));
+        fprintf(stderr, "narc yank: error while loading FILE “%s” as NARC: %s\n", *argv, narc_strerror(err));
         return EXIT_FAILURE;
     }
 
@@ -95,7 +95,7 @@ int yank(int argc, const char **argv)
     output = output ? output : output_name(input_file, (const char *)fimg, file_idx);
     fout = fopen(output, "wb");
     if (fout == NULL) {
-        fprintf(stderr, "narc yank: failed to open output file for writing “%s”: %s\n", output, strerror(errno));
+        fprintf(stderr, "narc yank: error while opening file “%s” for writing: %s\n", output, strerror(errno));
         goto fail;
     }
 

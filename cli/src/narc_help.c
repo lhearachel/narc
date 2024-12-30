@@ -54,7 +54,7 @@ int help(int argc, const char **argv)
     }
 
 error:
-    fprintf(stderr, "narc: Unrecognized command “%s”\n", *argv);
+    fprintf(stderr, "narc help: unrecognized command “%s”\n", *argv);
     fprintf(stderr, "%s\n%s\n", short_usage, commands);
     return EXIT_FAILURE;
 }

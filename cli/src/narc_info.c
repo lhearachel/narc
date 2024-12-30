@@ -65,7 +65,7 @@ int info(int argc, const char **argv)
     struct vfs_ctx vfs_ctx = {0};
     enum narc_error err = narc_load(*argv, &narc, &vfs_ctx);
     if (err != NARCERR_NONE) {
-        FAIL("narc info: could not load FILE “%s”: %s\n", *argv, narc_strerror(err));
+        FAIL("narc info: error while loading FILE “%s” as NARC: %s\n", *argv, narc_strerror(err));
     }
 
     struct fatb_meta *fatb_meta = (struct fatb_meta *)(narc->vfs + vfs_ctx.fatb_ofs);
