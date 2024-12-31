@@ -1,7 +1,16 @@
 # `narc`
 
-An implementation of the Nitro Archive virtual file system used by the Nintendo
-DS.
+An implementation of the Nitro Archive (NARC) virtual file system used by the
+Nintendo DS.
+
+This repository provides two code modules:
+
+1. A library implementation of the NARC file specification. This module can be
+   compiled as a shared library and linked against other projects which require
+   interactivity with NARCs.
+2. A CLI, which builds upon the included library to provide a simple program
+   for creating NARCs, extracting files from existing NARCs, and viewing
+   metadata about existing NARCs.
 
 ## Table of Contents
 
@@ -16,73 +25,87 @@ DS.
 
 ## Install
 
-## Usage
+### Install from Source
 
-## API
+A `Makefile` is provided for convenience, which will build both a shareable
+library `libnarc` and a static executable. After acquiring a copy of the source
+-- via `git` or a `tar` archive -- `cd` into the source folder and run:
+
+```bash
+sudo make install
+```
+
+By default:
+
+1. `libnarc.so` will be installed to `~/.local/lib`
+2. `narc` will be installed to `~/.local/bin`
+
+If you wish to change the parent directory of these destinations, specify that
+parent via `DESTDIR` ahead of the `make` command, e.g.:
+
+```bash
+# This will install `libnarc.so` to `/usr/local/lib` and `narc` to
+# `/usr/local/bin`.
+DESTDIR=/usr/local sudo make install
+```
+
+### Integrate via Meson
+
+A `meson.build` file is also provided for integrating `narc` as a subproject. To
+add `narc` to your project, create the file `subprojects/narc.wrap` with the
+following content:
+
+```ini
+[wrap-git]
+url = https://github.com/lhearachel/narc.git
+; Replace <main> here with a release tag or commit hash, if desired.
+revision = main
+depth = 1
+
+[provide]
+program_names = narc
+dependency_names = libnarc
+```
+
+## CLI Usage
+
+`narc` ships with rich documentation via its help-text:
+
+```text
+narc - create, extract, and explore Nitro Archive virtual filesystems
+
+Usage: narc [-h | --help] [-v | --version] [command] [arguments]
+
+Commands:
+  c, create    Create a NARC from a folder of physical files
+  x, extract   Extract virtual files from the NARC to a folder
+  y, yank      Yank individual files from the NARC to disk
+  i, info      Print metadata for a NARC
+  h, help      Print help-text for a particular command
+```
+
+For brevity, individual commands will not be explained in detail here; refer to
+the help-text for individual commands as needed after installation.
+
+## Library API
+
+The meat of `narc` is in the `libnarc` API. After installation, a calling
+program should have access to the following files in their library include path:
 
 ```c
-#include <stddef.h>
-#include <stdint.h>
+#include <narc/api/check.h>
+#include <narc/api/dump.h>
+#include <narc/api/error.h>
+#include <narc/api/files.h>
+#include <narc/api/load.h>
+#include <narc/api/pack.h>
+```
 
-struct narc;
+If desired, the whole library can also be included with a single include
+statement:
 
-/*
- * Allocate memory for a new NARC.
- */
-struct narc *narc_alloc(void);
-
-/*
- * Free allocated NARC memory.
- */
-void narc_free(struct narc *narc);
-
-/*
- * Load a NARC from an existing file on disk at the given path.
- */
-int narc_load(struct narc *narc, const char *file_path);
-
-/*
- * Write a NARC to a file on disk at the given path.
- */
-int narc_write(struct narc *narc, const char *file_path);
-
-/*
- * Add a file image to the end of a NARC. If successful, then `out_file_id` will
- * be set to the file ID of the persisted image.
- */
-int narc_add(struct narc *narc, unsigned char file_image[], uint16_t *out_file_id);
-
-/*
- * Read a file image with the given ID from a NARC. If such a file image exists,
- * then `out_file_image` will be set to the in-memory address of the file image
- * within the NARC and `out_file_size` will be set to the byte-size of that
- * image.
- */
-int narc_read(struct narc *narc, uint16_t file_id, unsigned char *out_file_image[], size_t *out_file_size);
-
-/*
- * Compute the SHA-1 hash of this NARC.
- *
- * The resulting hash will always be 20 bytes in length.
- */
-uint8_t *narc_hash(struct narc *narc);
-
-/*
- * Compute the SHA-1 hash of a file image with the given ID within a NARC. If
- * such a file exists, then `out_file_hash` will be set to the resulting 20-byte
- * hash.
- */
-int narc_hash_file(struct narc *narc, uint16_t file_id, uint8_t *out_file_hash[]);
-
-/*
- * Report the number of files contained within a NARC.
- */
-uint16_t narc_num_files(struct narc *narc);
-
-/*
- * Print a report on internal information about a NARC. Useful for debugging.
- */
-void narc_printf(struct narc *narc);
+```c
+#include <narc/narc.h>
 ```
 
 ## Acknowledgements
@@ -92,8 +115,6 @@ void narc_printf(struct narc *narc);
   his section on [DS cartridge file systems][gbatek-ds-filesys] was instrumental
   in building this implementation. The relevant documentation has been mirrored
   here in `docs`, for convenience and preservation.
-
-## Contributing
 
 ## License
 
