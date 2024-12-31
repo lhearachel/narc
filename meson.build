@@ -36,8 +36,9 @@ libnarc = shared_library(
     'narc',
     lib_sources,
     include_directories: lib_includes,
-    install: true,
+    install: install,
     install_mode: 'rwxr-xr-x',
+    native: native,
     version: meson.project_version(),
 )
 
@@ -56,8 +57,9 @@ narc_exe = executable(
         cli_includes,
         lib_includes,
     ],
-    install: true,
+    install: install,
     install_mode: 'rwxr-xr-x',
+    native: native,
 )
 
 meson.override_find_program('narc', narc_exe)
