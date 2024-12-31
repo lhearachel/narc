@@ -11,13 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-CWD_BASE = $(shell basename $(CURDIR))
+TARGET = narc
+DESTDIR ?= ~/.local
+UNAME_S = $(shell uname -s)
 
-CLITARGET = $(CWD_BASE)
-LIBTARGET = lib$(CWD_BASE).so
+ifneq (,$(findstring Linux,$(UNAME_S)))
+CLITARGET = $(TARGET)
+LIBTARGET = lib$(TARGET).so
+else
+ifneq (,$(findstring Darwin,$(UNAME_S)))
+CLITARGET = $(TARGET)
+LIBTARGET = lib$(TARGET).dynlib
+else
+# TODO: Windows support
+$(error Windows unsupported)
+endif
+endif
 
 CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
-CFLAGS += -Ilib/include
+CFLAGS += -I./lib/include
 
 LIBAPI = check dump error files load pack
 LIBINC = $(wildcard lib/include/*.h) $(wildcard lib/include/*/*.h)
@@ -33,8 +45,7 @@ CLIDEP = $(CLISRC:.c=.d)
 ALLSRC = $(CLISRC) $(LIBSRC)
 ALLINC = $(CLIINC) $(LIBINC)
 
-.PHONY: all cli lib debug release clean
-.NOTPARALLEL: lib cli
+.PHONY: all cli lib debug release clean install
 
 all: lib cli
 
@@ -55,13 +66,27 @@ clean:
 -include $(CLIDEP)
 
 # Statically link the CLI
-$(CLITARGET): CFLAGS += -Icli/include
+$(CLITARGET): CFLAGS += -I./cli/include
 $(CLITARGET): $(CLIOBJ) $(LIBOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(LIBTARGET): LDFLAGS += -shared
 $(LIBTARGET): $(LIBOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
+
+install: lib cli
+	mkdir -pm 755 $(DESTDIR)/bin
+	mkdir -pm 755 $(DESTDIR)/lib
+	mkdir -pm 755 $(DESTDIR)/include
+	mkdir -pm 755 $(DESTDIR)/include/narc
+	mkdir -pm 755 $(DESTDIR)/include/narc/api
+	mkdir -pm 755 $(DESTDIR)/include/narc/defs
+
+	install -m 755 -t $(DESTDIR)/bin $(CLITARGET)
+	install -m 644 -t $(DESTDIR)/lib $(LIBTARGET)
+	install -m 644 -t $(DESTDIR)/include/narc $(wildcard lib/include/*.h)
+	install -m 644 -t $(DESTDIR)/include/narc/api $(wildcard lib/include/api/*.h)
+	install -m 644 -t $(DESTDIR)/include/narc/defs $(wildcard lib/include/defs/*.h)
 
 # Compile library sources with position-independent code for shared object link
 lib/src/%.o: CFLAGS += -fpic
