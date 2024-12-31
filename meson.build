@@ -61,3 +61,4 @@ narc_exe = executable(
 )
 
 meson.override_find_program('narc', narc_exe)
+meson.override_dependency('libnarc', libnarc_dep)
