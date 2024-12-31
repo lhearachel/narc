@@ -41,6 +41,22 @@ char *basename_extend(const char *path, const char *ext)
     return buf;
 }
 
+char *basename_stem_extend(const char *path, const char *ext)
+{
+    char *p = strrchr(path, '/');
+    if (p == NULL) {
+        p = (char *)path;
+    }
+
+    char *s = strrchr(p, '.');
+    size_t stem_len = (s == NULL) ? strlen(p) : s - p;
+
+    char *buf = malloc(stem_len + strlen(ext) + 2);
+    strncpy(buf, p, stem_len);
+    sprintf(buf + stem_len, ".%s", ext);
+    return buf;
+}
+
 bool match_either(const char *s, const char *a, const char *b)
 {
     return (a != NULL && strcmp(s, a) == 0)
