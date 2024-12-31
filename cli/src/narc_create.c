@@ -24,6 +24,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include <sys/stat.h>
+
 #include "api/pack.h"
 #include "defs/narc.h"
 #include "defs/vfs.h"
@@ -85,7 +87,7 @@ struct options {
 
 static int parse_opts(int *argc, const char ***argv, struct options *opts);
 static int pack(struct options *opts);
-static struct strvec *build_pack_list(DIR *dir, const char *order_fname, const char *ignore_fname);
+static struct strvec *build_pack_list(DIR *dir, const char *dir_name, const char *order_fname, const char *ignore_fname);
 static struct strbuild *start_index(const char *target_fname, char **out_guard);
 static void add_to_index(struct strbuild *index, const char *fname, const size_t i);
 static void finish_index(struct strbuild *index, const char *guard);
@@ -173,7 +175,7 @@ static int pack(struct options *opts)
     char guard[256] = {0};
     char *guard_p = &guard[0]; // just to make the compiler happy
     struct strbuild *index = start_index(naix, &guard_p);
-    struct strvec *to_pack = build_pack_list(dir, opts->order, opts->ignore);
+    struct strvec *to_pack = build_pack_list(dir, opts->input, opts->order, opts->ignore);
     if (to_pack == NULL) {
         fprintf(stderr, "narc create: failure while building packing list");
         goto fail;
@@ -247,7 +249,7 @@ fail:
     return EXIT_FAILURE;
 }
 
-static struct strvec *build_pack_list(DIR *dir, const char *order_fname, const char *ignore_fname)
+static struct strvec *build_pack_list(DIR *dir, const char *dir_name, const char *order_fname, const char *ignore_fname)
 {
     struct strvec *all_files = NULL, *ignored = NULL;
 
@@ -268,6 +270,10 @@ static struct strvec *build_pack_list(DIR *dir, const char *order_fname, const c
     struct dirent *entry;
     while ((entry = readdir(dir)) != NULL) {
         if (match_either(entry->d_name, ".", "..")) {
+            continue;
+        }
+
+        if (isdir(dir_name, entry->d_name)) {
             continue;
         }
 

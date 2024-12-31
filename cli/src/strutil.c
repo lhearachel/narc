@@ -24,6 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <sys/stat.h>
+
 char *basename(const char *path)
 {
     char *p = strrchr(path, '/');
@@ -90,4 +92,24 @@ bool match_either(const char *s, const char *a, const char *b)
 {
     return (a != NULL && strcmp(s, a) == 0)
         || (b != NULL && strcmp(s, b) == 0);
+}
+
+bool isdir(const char *parent, const char *file)
+{
+    char target[256];
+    size_t parent_len = strlen(parent);
+    strcpy(target, parent);
+
+    if (file != NULL) {
+        char *p = target + parent_len;
+        *p = '/';
+        strcpy(p + 1, file);
+    }
+
+    struct stat stbuf;
+    if (stat(target, &stbuf) != 0) {
+        return false;
+    }
+
+    return S_ISDIR(stbuf.st_mode);
 }

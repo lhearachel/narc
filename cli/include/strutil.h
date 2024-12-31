@@ -31,4 +31,8 @@ size_t nrtrim(const char *s);
 char *basename_extend(const char *path, const char *ext);
 char *strcpy_fext(const char *path, const char *ext);
 
+// Return true if "`parent`/`file`" is a directory, false otherwise.
+// If file is not given, then `parent` will be tested without the trailing slash.
+bool isdir(const char *parent, const char *file);
+
 #endif // NARC_STRUTIL_H
