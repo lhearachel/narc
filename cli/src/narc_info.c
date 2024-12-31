@@ -26,6 +26,7 @@
 #include "defs/fntb.h"
 #include "defs/vfs.h"
 
+#include "command.h"
 #include "strutil.h"
 
 // clang-format off

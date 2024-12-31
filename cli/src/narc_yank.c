@@ -23,6 +23,7 @@
 #include "api/files.h"
 #include "api/load.h"
 
+#include "command.h"
 #include "strutil.h"
 
 // clang-format off

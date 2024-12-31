@@ -28,6 +28,7 @@
 #include "defs/narc.h"
 #include "defs/vfs.h"
 
+#include "command.h"
 #include "strbuild.h"
 #include "strutil.h"
 #include "strvec.h"
