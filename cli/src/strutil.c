@@ -73,6 +73,19 @@ char *basename_stem_extend(const char *path, const char *ext)
     return buf;
 }
 
+char *strcpy_fext(const char *path, const char *ext)
+{
+    char *p = strrchr(path, '.');
+    if (p == NULL) {
+        p = (char *)path;
+    }
+
+    int len = p - path;
+    char *buf = malloc(len + strlen(ext) + 2);
+    sprintf(buf, "%.*s.%s", len, path, ext);
+    return buf;
+}
+
 bool match_either(const char *s, const char *a, const char *b)
 {
     return (a != NULL && strcmp(s, a) == 0)

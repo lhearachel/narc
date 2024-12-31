@@ -99,7 +99,7 @@ int create(int argc, const char **argv)
     struct options opts = {
         .input = NULL,
         .output = NULL,
-        .naix = false, // TODO: Construct NAIX header during packing
+        .naix = false,
         .order = NULL,
         .ignore = NULL,
     };
@@ -157,7 +157,7 @@ static int pack(struct options *opts)
     char *cwd = NULL;
     struct narc *narc = NULL;
     struct vfs_pack_ctx *ctx = NULL;
-    char *naix = basename_stem_extend(opts->output, "naix");
+    char *naix = strcpy_fext(opts->output, "naix");
 
     dir = opendir(opts->input);
     if (dir == NULL) {
@@ -314,7 +314,8 @@ static struct strbuild *start_index(const char *target_fname, char **out_guard)
     char guard[256] = "NARC_";
     size_t i;
     char c, *p = &guard[5];
-    for (i = 0; i < 250 && (c = target_fname[i]) != '\0'; i++) {
+    char *target_fname_base = basename(target_fname);
+    for (i = 0; i < 250 && (c = target_fname_base[i]) != '\0'; i++) {
         if (c == '-' || c == '.' || c == '_') {
             *p = '_';
             p++;

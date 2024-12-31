@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_UTILS_H
-#define NARC_UTILS_H
+#ifndef NARC_STRUTIL_H
+#define NARC_STRUTIL_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -38,6 +38,6 @@ size_t nrtrim(const char *s);
 // NOTE: These routines perform a string allocation! The calling client is
 // responsible for freeing the result when they are finished with it!
 char *basename_extend(const char *path, const char *ext);
-char *basename_stem_extend(const char *path, const char *ext);
+char *strcpy_fext(const char *path, const char *ext);
 
-#endif // NARC_UTILS_H
+#endif // NARC_STRUTIL_H
