@@ -22,6 +22,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "strutil.h"
+
 typedef intptr_t ssize_t;
 
 struct strvec *strvec_new(size_t capacity)
@@ -126,14 +128,15 @@ int strvec_from_file(struct strvec *strvec, const char *fname)
     ssize_t read_size;
 
     while ((read_size = read_line(&buf, &buf_size, f)) != -1) {
-        // Skip over empty lines
-        if (buf[0] == '\n' || (buf[0] == '\r' && buf[1] == '\n') || buf[0] == '\0') {
+        // Do not allow trailing whitespace
+        size_t trimmed_len = nrtrim(buf);
+        if (trimmed_len == 0) {
             continue;
         }
 
-        char *line = malloc(read_size);
-        strncpy(line, buf, read_size - 1);
-        line[read_size] = '\0';
+        char *line = malloc(trimmed_len + 1);
+        strncpy(line, buf, trimmed_len);
+        line[trimmed_len] = '\0';
         if (strvec_push(strvec, line)) {
             return -1;
         }

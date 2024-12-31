@@ -173,6 +173,10 @@ static int pack(struct options *opts)
     char *guard_p = &guard[0]; // just to make the compiler happy
     struct strbuild *index = start_index(naix, &guard_p);
     struct strvec *to_pack = build_pack_list(dir, opts->order, opts->ignore);
+    if (to_pack == NULL) {
+        fprintf(stderr, "narc create: failure while building packing list");
+        goto fail;
+    }
 
     chdir(opts->input);
     ctx = narc_pack_start();

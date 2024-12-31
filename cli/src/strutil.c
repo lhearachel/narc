@@ -17,6 +17,7 @@
 #include "strutil.h"
 
 #include <assert.h>
+#include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -27,6 +28,17 @@ char *basename(const char *path)
 {
     char *p = strrchr(path, '/');
     return p ? p : (char *)path;
+}
+
+size_t nrtrim(const char *s)
+{
+    size_t end = strlen(s);
+    char *p = (char *)&s[end - 1];
+    while (isspace(*p)) {
+        p--;
+    }
+
+    return (size_t)(p - s) + 1;
 }
 
 char *basename_extend(const char *path, const char *ext)

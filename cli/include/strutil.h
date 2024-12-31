@@ -17,6 +17,7 @@
 #define NARC_UTILS_H
 
 #include <stdbool.h>
+#include <stddef.h>
 
 // Standard failure macro. `fail` should be implemented for all commands
 // as an end-state where any potentially-allocated memory is freed and the
@@ -29,6 +30,10 @@
 
 bool match_either(const char *s, const char *a, const char *b);
 char *basename(const char *path);
+
+// Return the length of the input string `s` if it were to be right-trimmed
+// of trailing whitespace.
+size_t nrtrim(const char *s);
 
 // NOTE: These routines perform a string allocation! The calling client is
 // responsible for freeing the result when they are finished with it!
