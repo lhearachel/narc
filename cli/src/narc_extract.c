@@ -25,7 +25,7 @@
 #include "defs/error.h"
 #include "defs/vfs.h"
 
-#include "utils.h"
+#include "strutil.h"
 
 // clang-format off
 static const char *tag_line = "narc extract - extract virtual files from the NARC to a folder\n";

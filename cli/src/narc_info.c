@@ -26,7 +26,7 @@
 #include "defs/fntb.h"
 #include "defs/vfs.h"
 
-#include "utils.h"
+#include "strutil.h"
 
 // clang-format off
 static const char *tag_line = "narc info - print metadata for a NARC\n";

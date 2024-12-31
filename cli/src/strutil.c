@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "utils.h"
+#include "strutil.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -49,7 +49,7 @@ char *basename_stem_extend(const char *path, const char *ext)
     }
 
     char *s = strrchr(p, '.');
-    size_t stem_len = (s == NULL) ? strlen(p) : s - p;
+    size_t stem_len = (s == NULL) ? strlen(p) : (size_t)(s - p); // cast to make compiler happy
 
     char *buf = malloc(stem_len + strlen(ext) + 2);
     strncpy(buf, p, stem_len);

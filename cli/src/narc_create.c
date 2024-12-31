@@ -29,8 +29,8 @@
 #include "defs/vfs.h"
 
 #include "strbuild.h"
+#include "strutil.h"
 #include "strvec.h"
-#include "utils.h"
 
 typedef intptr_t ssize_t;
 

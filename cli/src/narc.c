@@ -22,7 +22,7 @@
 #include <narc.h>
 
 #include "command.h"
-#include "utils.h"
+#include "strutil.h"
 
 // clang-format off
 const struct command handlers[] = {

@@ -23,7 +23,7 @@
 #include "api/files.h"
 #include "api/load.h"
 
-#include "utils.h"
+#include "strutil.h"
 
 // clang-format off
 static const char *tag_line = "narc yank - yank individual files from the NARC to disk\n";
