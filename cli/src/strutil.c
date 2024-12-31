@@ -46,6 +46,8 @@ char *basename_extend(const char *path, const char *ext)
     char *p = strrchr(path, '/');
     if (p == NULL) {
         p = (char *)path;
+    } else {
+        p++;
     }
 
     char *buf = malloc(strlen(p) + strlen(ext) + 2);
@@ -58,6 +60,8 @@ char *basename_stem_extend(const char *path, const char *ext)
     char *p = strrchr(path, '/');
     if (p == NULL) {
         p = (char *)path;
+    } else {
+        p++;
     }
 
     char *s = strrchr(p, '.');

@@ -207,7 +207,7 @@ static int pack(struct options *opts)
     if (opts->naix) {
         fnaix = fopen(naix, "w");
         if (fnaix == NULL) {
-            FAIL("narc create: error while opening file “%s” for writing: %s\n", opts->output, strerror(errno));
+            FAIL("narc create: error while opening file “%s” for writing: %s\n", naix, strerror(errno));
         }
         fwrite(index->s, 1, index->len, fnaix);
         fclose(fnaix);
