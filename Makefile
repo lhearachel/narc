@@ -17,8 +17,6 @@ CLITARGET = $(CWD_BASE)
 LIBTARGET = lib$(CWD_BASE).so
 
 CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
-
-# TODO: This will need to be changed when building for installation
 CFLAGS += -Ilib/include
 
 LIBAPI = check dump error files load pack
@@ -56,18 +54,15 @@ clean:
 -include $(LIBDEP)
 -include $(CLIDEP)
 
-# TODO: Replace rpath with something more robust...
-$(CLITARGET): LDFLAGS += -Wl,-rpath=$(CURDIR)
-$(CLITARGET): LDFLAGS += -L$(CURDIR)
-$(CLITARGET): LDFLAGS += -l$(CWD_BASE)
+# Statically link the CLI
 $(CLITARGET): CFLAGS += -Icli/include
-$(CLITARGET): $(CLIOBJ)
+$(CLITARGET): $(CLIOBJ) $(LIBOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(LIBTARGET): LDFLAGS += -shared
 $(LIBTARGET): $(LIBOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-# Compile library sources with position-independent code
+# Compile library sources with position-independent code for shared object link
 lib/src/%.o: CFLAGS += -fpic
 lib/src/%.o: lib/src/%.c
