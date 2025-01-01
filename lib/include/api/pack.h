@@ -16,6 +16,10 @@
 #ifndef NARC_API_PACK_H
 #define NARC_API_PACK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <defs/error.h>
 #include <defs/vfs.h>
 
@@ -45,5 +49,9 @@ void narc_pack_file(struct vfs_pack_ctx *ctx, unsigned char *image, const uint32
  * the packing context structure will be destroyed and freed.
  */
 struct narc *narc_pack(struct vfs_pack_ctx *ctx);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_API_PACK_H

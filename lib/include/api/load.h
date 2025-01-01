@@ -16,6 +16,10 @@
 #ifndef NARC_API_LOAD_H
 #define NARC_API_LOAD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <defs/error.h>
 #include <defs/narc.h>
 #include <defs/vfs.h>
@@ -30,5 +34,9 @@
  * This routine may emit any error which would also be emitted by `narc_check`.
  */
 enum narc_error narc_load(const char *file_path, struct narc **out_narc, struct vfs_ctx *out_vfs_ctx);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_API_LOAD_H

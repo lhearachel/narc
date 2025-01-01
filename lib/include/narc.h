@@ -16,11 +16,19 @@
 #ifndef NARC_H
 #define NARC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <api/check.h>
 #include <api/dump.h>
 #include <api/error.h>
 #include <api/files.h>
 #include <api/load.h>
 #include <api/pack.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_H

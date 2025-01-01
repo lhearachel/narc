@@ -16,6 +16,10 @@
 #ifndef NARC_DEFS_FNTB_H
 #define NARC_DEFS_FNTB_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #define FNTB_MAGIC 0x464E5442
@@ -30,5 +34,9 @@ struct fntb_main_entry {
     uint16_t first_file;
     uint16_t directory;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_DEFS_FNTB_H

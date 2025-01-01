@@ -16,6 +16,10 @@
 #ifndef NARC_DEFS_NARC_H
 #define NARC_DEFS_NARC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #define HEADER_MAGIC          0x4352414E
@@ -32,5 +36,9 @@ struct narc {
     uint16_t num_sections;
     unsigned char vfs[];
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_DEFS_NARC_H

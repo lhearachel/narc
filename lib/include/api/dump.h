@@ -16,6 +16,10 @@
 #ifndef NARC_API_DUMP_H
 #define NARC_API_DUMP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <defs/error.h>
 #include <defs/narc.h>
 #include <defs/vfs.h>
@@ -27,5 +31,9 @@
  * VFS ID.
  */
 enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const char *dst_dir);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_API_DUMP_H

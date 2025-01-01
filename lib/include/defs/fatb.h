@@ -16,6 +16,10 @@
 #ifndef NARC_DEFS_FATB_H
 #define NARC_DEFS_FATB_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #define FATB_MAGIC 0x46415442
@@ -31,5 +35,9 @@ struct fatb_entry {
     uint32_t start;
     uint32_t end;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_DEFS_FATB_H

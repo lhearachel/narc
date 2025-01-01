@@ -16,6 +16,10 @@
 #ifndef NARC_DEFS_FIMG_H
 #define NARC_DEFS_FIMG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #define FIMG_MAGIC 0x46494D47
@@ -29,5 +33,9 @@ struct fimg {
     uint32_t size;
     unsigned char image[];
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_DEFS_FIMG_H

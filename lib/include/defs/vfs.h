@@ -16,6 +16,10 @@
 #ifndef NARC_DEFS_VFS_H
 #define NARC_DEFS_VFS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 struct vfs_ctx {
@@ -37,5 +41,9 @@ struct vfs_pack_ctx {
     uint16_t count;
     uint32_t size;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_DEFS_VFS_H

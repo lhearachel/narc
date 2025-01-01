@@ -16,11 +16,19 @@
 #ifndef NARC_API_ERROR_H
 #define NARC_API_ERROR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <defs/error.h>
 
 /*
  * Convert a `narc_error` value into a corresponding human-readable message.
  */
 const char *narc_strerror(enum narc_error error);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_API_ERROR_H

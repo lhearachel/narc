@@ -16,6 +16,10 @@
 #ifndef NARC_API_CHECK_H
 #define NARC_API_CHECK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <defs/error.h>
 #include <defs/narc.h>
 #include <defs/vfs.h>
@@ -85,5 +89,9 @@ enum narc_error narc_check_fntb(const unsigned char vfs[], uint32_t *out_size);
  * contain the total size of the section.
  */
 enum narc_error narc_check_fimg(const unsigned char vfs[], uint32_t *out_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_API_CHECK_H

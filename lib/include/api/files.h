@@ -16,6 +16,10 @@
 #ifndef NARC_API_FILES_H
 #define NARC_API_FILES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <defs/error.h>
 #include <defs/narc.h>
 #include <defs/vfs.h>
@@ -41,5 +45,9 @@ char *narc_files_getext(const char *data);
  * image, and `out_size` will be assigned to the size of that image (in bytes).
  */
 enum narc_error narc_files_getimg(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const uint16_t file_idx, const unsigned char **out_image, uint32_t *out_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_API_FILES_H

@@ -16,6 +16,10 @@
 #ifndef NARC_DEFS_ERROR_H
 #define NARC_DEFS_ERROR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum narc_error {
     NARCERR_NONE = 0,
 
@@ -40,5 +44,9 @@ enum narc_error {
 
     NARCERR_ERRNO = 0xFF,
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NARC_DEFS_ERROR_H
