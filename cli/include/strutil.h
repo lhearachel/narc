@@ -35,4 +35,7 @@ char *strcpy_fext(const char *path, const char *ext);
 // If file is not given, then `parent` will be tested without the trailing slash.
 bool isdir(const char *parent, const char *file);
 
+// Comparison function for Q sort.
+int strcmp_q(const void *s1, const void *s2);
+
 #endif // NARC_STRUTIL_H

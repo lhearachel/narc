@@ -39,6 +39,10 @@ struct strvec *strvec_new(size_t capacity)
 
 void strvec_del(struct strvec *strvec)
 {
+    if (strvec == NULL) {
+        return;
+    }
+
     for (size_t i = 0; i < strvec->count; i++) {
         free(strvec->s[i]);
     }
@@ -61,6 +65,23 @@ int strvec_push(struct strvec *strvec, char *s)
 
     strvec->s[strvec->count] = s;
     strvec->count++;
+    return 0;
+}
+
+int strvec_extend(struct strvec *v1, struct strvec *v2)
+{
+    if (v1->count + v2->count > v1->capacity) {
+        char **p = realloc(v1->s, v1->capacity * sizeof(char *));
+        if (p == NULL) {
+            return -1;
+        }
+
+        v1->s = p;
+        v1->capacity *= 2;
+    }
+
+    memcpy(v1->s + v1->count, v2->s, (v2->count * sizeof(char *)));
+    v1->count += v2->count;
     return 0;
 }
 

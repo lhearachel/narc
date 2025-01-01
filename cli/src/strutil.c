@@ -113,3 +113,10 @@ bool isdir(const char *parent, const char *file)
 
     return S_ISDIR(stbuf.st_mode);
 }
+
+int strcmp_q(const void *s1, const void *s2)
+{
+    char *const *a = s1;
+    char *const *b = s2;
+    return strcmp(*a, *b);
+}

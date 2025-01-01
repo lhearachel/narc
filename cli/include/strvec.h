@@ -27,6 +27,7 @@ struct strvec {
 struct strvec *strvec_new(size_t capacity);
 void strvec_del(struct strvec *strvec);
 int strvec_push(struct strvec *strvec, char *s);
+int strvec_extend(struct strvec *v1, struct strvec *v2);
 int strvec_from_file(struct strvec *strvec, const char *fname);
 
 #endif // NARC_STRVEC_H

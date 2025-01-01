@@ -160,6 +160,8 @@ static int pack(struct options *opts)
     char *cwd = NULL;
     struct narc *narc = NULL;
     struct vfs_pack_ctx *ctx = NULL;
+    struct strbuild *index = NULL;
+    struct strvec *to_pack = NULL;
     char *naix = strcpy_fext(opts->output, "naix");
 
     dir = opendir(opts->input);
@@ -174,8 +176,8 @@ static int pack(struct options *opts)
 
     char guard[256] = {0};
     char *guard_p = &guard[0]; // just to make the compiler happy
-    struct strbuild *index = start_index(naix, &guard_p);
-    struct strvec *to_pack = build_pack_list(dir, opts->input, opts->order, opts->ignore);
+    index = start_index(naix, &guard_p);
+    to_pack = build_pack_list(dir, opts->input, opts->order, opts->ignore);
     if (to_pack == NULL) {
         fprintf(stderr, "narc create: failure while building packing list");
         goto fail;
@@ -225,6 +227,8 @@ static int pack(struct options *opts)
     free(naix);
     free(cwd);
     free(narc);
+    strbuild_del(index);
+    strvec_del(to_pack);
     fclose(fout);
     closedir(dir);
     return EXIT_SUCCESS;
@@ -242,6 +246,8 @@ fail:
         closedir(dir);
     }
 
+    strbuild_del(index);
+    strvec_del(to_pack);
     narc_pack_halt(ctx);
     free(naix);
     free(cwd);
@@ -251,7 +257,7 @@ fail:
 
 static struct strvec *build_pack_list(DIR *dir, const char *dir_name, const char *order_fname, const char *ignore_fname)
 {
-    struct strvec *all_files = NULL, *ignored = NULL;
+    struct strvec *all_files = NULL, *ignored = NULL, *lex_sorted_files = NULL;
 
     // Build the list of ordered files first. These are never ignored.
     all_files = strvec_new(5000);
@@ -265,9 +271,12 @@ static struct strvec *build_pack_list(DIR *dir, const char *dir_name, const char
         goto cleanup_error;
     }
 
-    // Iterate over the directory, filtering out entries which should be ignored,
+    // Iterate over the directory, filtering out ignored entries.
+    // `readdir`'s ordering is effectively non-deterministic. Collect all the
+    // valid files, sort them, then attach them to the list of all packed files.
     errno = 0;
     struct dirent *entry;
+    lex_sorted_files = strvec_new(5000);
     while ((entry = readdir(dir)) != NULL) {
         if (match_either(entry->d_name, ".", "..")) {
             continue;
@@ -305,8 +314,15 @@ static struct strvec *build_pack_list(DIR *dir, const char *dir_name, const char
         char *fname = malloc(strlen(entry->d_name) + 1);
         strcpy(fname, entry->d_name);
         fname[strlen(entry->d_name)] = '\0';
-        strvec_push(all_files, fname);
+        strvec_push(lex_sorted_files, fname);
     }
+
+    qsort(lex_sorted_files->s, lex_sorted_files->count, sizeof(char *), strcmp_q);
+    strvec_extend(all_files, lex_sorted_files);
+
+    free(lex_sorted_files->s);
+    free(lex_sorted_files);
+    strvec_del(ignored);
 
     return all_files;
 
