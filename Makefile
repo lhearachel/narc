@@ -41,11 +41,14 @@ CLIINC = $(wildcard cli/include/*.h)
 CLISRC = $(wildcard cli/src/*.c)
 CLIOBJ = $(CLISRC:.c=.o)
 CLIDEP = $(CLISRC:.c=.d)
+CLIVER = cli/include/version.h
 
 ALLSRC = $(CLISRC) $(LIBSRC)
 ALLINC = $(CLIINC) $(LIBINC)
 
-.PHONY: all cli lib debug release clean install
+VERSION = VERSION
+
+.PHONY: all cli lib debug release clean install version
 
 all: lib cli
 
@@ -60,14 +63,18 @@ release: CFLAGS += -DNDEBUG -O3
 release: clean all
 
 clean:
-	$(RM) $(LIBTARGET) $(LIBOBJ) $(LIBDEP) $(CLITARGET) $(CLIOBJ) $(CLIDEP)
+	$(RM) $(LIBTARGET) $(LIBOBJ) $(LIBDEP) $(CLITARGET) $(CLIOBJ) $(CLIDEP) $(CLIVER)
 
 -include $(LIBDEP)
 -include $(CLIDEP)
 
+version:
+$(CLIVER): tools/version.sh $(VERSION)
+	$< $(VERSION) $@
+
 # Statically link the CLI
 $(CLITARGET): CFLAGS += -I./cli/include
-$(CLITARGET): $(CLIOBJ) $(LIBOBJ)
+$(CLITARGET): $(CLIVER) $(CLIOBJ) $(LIBOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(LIBTARGET): LDFLAGS += -shared

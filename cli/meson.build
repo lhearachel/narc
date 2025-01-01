@@ -24,4 +24,4 @@ cli_sources = files(
     'src/strvec.c',
 )
 
-cli_includes = include_directories('include')
+subdir('include')

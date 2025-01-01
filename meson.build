@@ -18,7 +18,9 @@ project(
     license: 'Apache-2.0',
     license_files: 'LICENSE',
     meson_version: '>=1.5.0',
-    version: '0.1.0',
+
+    # This is a little ugly, but it works... I guess...
+    version: run_command('./tools/version.sh', 'VERSION', check: false).stdout().strip(),
     default_options: {
         'buildtype': 'release', # O3
         'warning_level': '3', # all, extra, pedantic
@@ -28,7 +30,9 @@ project(
 
 native = get_option('native')
 install = native and meson.is_cross_build() ? false : true
+version = files('VERSION')
 
+subdir('tools')
 subdir('lib')
 subdir('cli')
 
@@ -50,6 +54,7 @@ libnarc_dep = declare_dependency(
 narc_exe = executable(
     'narc',
     sources: [
+        cli_version_h,
         cli_sources,
         lib_sources,
     ],

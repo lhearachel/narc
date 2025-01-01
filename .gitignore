@@ -17,3 +17,6 @@ valgrind.log
 
 # Testing files
 *.narc
+
+# Generated files
+cli/include/version.h

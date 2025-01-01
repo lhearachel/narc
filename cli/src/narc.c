@@ -23,6 +23,7 @@
 
 #include "command.h"
 #include "strutil.h"
+#include "version.h"
 
 // clang-format off
 const struct command handlers[] = {
@@ -34,7 +35,7 @@ const struct command handlers[] = {
     { 0 },
 };
 
-static const char *version = "0.1.0";
+static const char *version = NARC_VERSION;
 // clang-format on
 
 int main(int argc, const char **argv)
