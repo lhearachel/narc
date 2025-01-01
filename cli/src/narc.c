@@ -51,7 +51,7 @@ int main(int argc, const char **argv)
         return EXIT_SUCCESS;
     }
 
-    for (size_t i = 0; handlers[i].abbrev[0] != '\0'; i++) {
+    for (size_t i = 0; handlers[i].abbrev != NULL; i++) {
         if (match_either(*argv, handlers[i].abbrev, handlers[i].name)) {
             argc--;
             argv++;
