@@ -17,7 +17,7 @@ project(
     'c',
     license: 'Apache-2.0',
     license_files: 'LICENSE',
-    meson_version: '>=1.5.0',
+    meson_version: '>=1.3.0',
 
     # This is a little ugly, but it works... I guess...
     version: run_command('./tools/version.sh', 'VERSION', check: false).stdout().strip(),
