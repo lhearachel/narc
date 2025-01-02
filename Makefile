@@ -52,7 +52,7 @@ VERSION = VERSION
 
 all: lib cli
 
-cli: $(CLITARGET)
+cli: $(CLIVER) $(CLITARGET)
 
 lib: $(LIBTARGET)
 
@@ -74,7 +74,7 @@ $(CLIVER): tools/version.sh $(VERSION)
 
 # Statically link the CLI
 $(CLITARGET): CFLAGS += -I./cli/include
-$(CLITARGET): $(CLIVER) $(CLIOBJ) $(LIBOBJ)
+$(CLITARGET): $(CLIOBJ) $(LIBOBJ)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(LIBTARGET): LDFLAGS += -shared

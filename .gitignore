@@ -4,6 +4,7 @@
 *.exe
 *.out
 *.so
+*.dynlib
 /narc
 build/*
 
