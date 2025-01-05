@@ -18,10 +18,9 @@
 
 enum narc_error narc_check_header_fsize(const struct narc *narc, const size_t fsize)
 {
-    enum narc_error err = narc->size != fsize ? NARCERR_FILE_SIZE : NARCERR_NONE;
-    if (err != NARCERR_NONE) {
-        return err;
-    }
-
-    return narc_check_header(narc);
+    enum narc_error err = narc_check_header(narc);
+    return err != NARCERR_NONE
+        ? err
+        : narc->size != fsize ? NARCERR_FILE_SIZE
+                              : NARCERR_NONE;
 }
