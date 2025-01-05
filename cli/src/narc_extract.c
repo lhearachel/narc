@@ -69,12 +69,12 @@ int extract(int argc, const char **argv)
     struct vfs_ctx vfs_ctx = {0};
     enum narc_error err = narc_load(input, &narc, &vfs_ctx);
     if (err != NARCERR_NONE) {
-        FAIL("narc extract: error while loading FILE “%s” as NARC: %s", input, narc_strerror(err));
+        FAIL("narc extract: error while loading FILE “%s” as NARC: %s\n", input, narc_strerror(err));
     }
 
     err = narc_dump(narc, &vfs_ctx, output);
     if (err != NARCERR_NONE) {
-        FAIL("narc extract: error while writing to DIRECTORY “%s”: %s", output, narc_strerror(err));
+        FAIL("narc extract: error while writing to DIRECTORY “%s”: %s\n", output, narc_strerror(err));
     }
 
     return EXIT_SUCCESS;
