@@ -28,6 +28,14 @@ static const struct { const char *magic; const char *ext; size_t cmp_n; } extens
     { "RLCN", "NCLR", 4 },
     { "RECN", "NCER", 4 },
     { "RNAN", "NANR", 4 },
+    { "RCSN", "NSCR", 4 },
+    { "BMD0", "BMD0", 4 },
+    { "BCA0", "BCA0", 4 },
+    { "BTA0", "BTA0", 4 },
+    { "BTP0", "BTP0", 4 },
+    { "BTX0", "BTX0", 4 },
+    { "BMA0", "BMA0", 4 },
+    { "BVA0", "BVA0", 4 },
     { 0 }, // must always be last!
 };
 // clang-format on
