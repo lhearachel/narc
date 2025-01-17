@@ -21,7 +21,7 @@
 
 void narc_pack_file_copy(struct vfs_pack_ctx *ctx, unsigned char *image, const uint32_t size)
 {
-    unsigned char *copy = malloc(size);
+    unsigned char *copy = calloc(size, 1);
     memcpy(copy, image, size);
 
     narc_pack_file(ctx, copy, size);
