@@ -20,7 +20,7 @@ project(
     meson_version: '>=1.3.0',
 
     # This is a little ugly, but it works... I guess...
-    version: run_command('./tools/version.sh', 'VERSION', check: false).stdout().strip(),
+    version: run_command('./tools/version.sh', '.version', check: false).stdout().strip(),
     default_options: {
         'buildtype': 'release', # O3
         'warning_level': '3', # all, extra, pedantic

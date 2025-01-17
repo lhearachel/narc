@@ -46,7 +46,7 @@ CLIVER = cli/include/version.h
 ALLSRC = $(CLISRC) $(LIBSRC)
 ALLINC = $(CLIINC) $(LIBINC)
 
-VERSION = VERSION
+VERSION = .version
 
 .PHONY: all cli lib debug release clean install version
 
