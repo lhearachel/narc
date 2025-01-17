@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <api/check.h>
-#include <defs/narc.h>
+#include <narc/api/check.h>
+#include <narc/defs/narc.h>
 
 #define ERROR_NEQ(expect, actual, err) \
     {                                  \

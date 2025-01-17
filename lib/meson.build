@@ -38,6 +38,7 @@ lib_sources = files(
     # pack API
     'src/pack/narc_pack.c',
     'src/pack/narc_pack_file.c',
+    'src/pack/narc_pack_file_copy.c',
     'src/pack/narc_pack_halt.c',
     'src/pack/narc_pack_start.c',
 )

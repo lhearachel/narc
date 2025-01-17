@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <api/check.h>
-#include <api/error.h>
-#include <api/load.h>
+#include <narc/api/check.h>
+#include <narc/api/error.h>
+#include <narc/api/load.h>
 
 #include <stdint.h>
 #include <stdio.h>

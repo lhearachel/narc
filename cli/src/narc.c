@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <narc.h>
+#include <narc/narc.h>
 
 #include "command.h"
 #include "strutil.h"

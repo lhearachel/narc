@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#include <api/pack.h>
-#include <defs/fatb.h>
-#include <defs/fimg.h>
-#include <defs/fntb.h>
-#include <defs/narc.h>
-#include <defs/vfs.h>
+#include <narc/api/pack.h>
+#include <narc/defs/fatb.h>
+#include <narc/defs/fimg.h>
+#include <narc/defs/fntb.h>
+#include <narc/defs/narc.h>
+#include <narc/defs/vfs.h>
 
 #include <stdio.h>
 #include <stdlib.h>

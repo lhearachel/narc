@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <api/dump.h>
-#include <api/files.h>
-#include <defs/fatb.h>
-#include <defs/fimg.h>
+#include <narc/api/dump.h>
+#include <narc/api/files.h>
+#include <narc/defs/fatb.h>
+#include <narc/defs/fimg.h>
 
 #include <errno.h>
 #include <stdbool.h>

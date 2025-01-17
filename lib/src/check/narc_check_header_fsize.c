@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <api/check.h>
+#include <narc/api/check.h>
 
 enum narc_error narc_check_header_fsize(const struct narc *narc, const size_t fsize)
 {

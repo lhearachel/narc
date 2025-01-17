@@ -18,13 +18,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "api/error.h"
-#include "api/files.h"
-#include "api/load.h"
-#include "defs/fatb.h"
-#include "defs/fimg.h"
-#include "defs/fntb.h"
-#include "defs/vfs.h"
+#include <narc/api/error.h>
+#include <narc/api/files.h>
+#include <narc/api/load.h>
+#include <narc/defs/fatb.h>
+#include <narc/defs/fimg.h>
+#include <narc/defs/fntb.h>
+#include <narc/defs/vfs.h>
 
 #include "command.h"
 #include "strutil.h"

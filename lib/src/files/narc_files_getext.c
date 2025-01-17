@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <api/files.h>
+#include <narc/api/files.h>
 
 #include <assert.h>
 #include <stddef.h>

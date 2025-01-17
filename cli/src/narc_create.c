@@ -26,9 +26,9 @@
 
 #include <sys/stat.h>
 
-#include "api/pack.h"
-#include "defs/narc.h"
-#include "defs/vfs.h"
+#include <narc/api/pack.h>
+#include <narc/defs/narc.h>
+#include <narc/defs/vfs.h>
 
 #include "command.h"
 #include "strbuild.h"

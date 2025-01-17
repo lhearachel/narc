@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <api/check.h>
-#include <defs/fntb.h>
+#include <narc/api/check.h>
+#include <narc/defs/fntb.h>
 
 enum narc_error narc_check_fntb(const unsigned char vfs[], uint32_t *out_size)
 {

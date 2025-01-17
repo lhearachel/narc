@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <api/check.h>
-#include <defs/fatb.h>
+#include <narc/api/check.h>
+#include <narc/defs/fatb.h>
 
 #define ERROR_NEQ(expect, actual, err) \
     {                                  \

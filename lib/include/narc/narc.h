@@ -13,27 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_API_DUMP_H
-#define NARC_API_DUMP_H
+#ifndef NARC_H
+#define NARC_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <defs/error.h>
-#include <defs/narc.h>
-#include <defs/vfs.h>
-
-/*
- * Write the contents of a NARC's virtual filesystem (VFS) to the specified
- * directory-path on disk. Any existing file-name table within the VFS will be
- * ignored. Files written to disk will be assigned names derived from their
- * VFS ID.
- */
-enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const char *dst_dir);
+#include <narc/api/check.h>
+#include <narc/api/dump.h>
+#include <narc/api/error.h>
+#include <narc/api/files.h>
+#include <narc/api/load.h>
+#include <narc/api/pack.h>
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // NARC_API_DUMP_H
+#endif // NARC_H

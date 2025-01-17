@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <api/files.h>
-#include <defs/fatb.h>
-#include <defs/fimg.h>
+#include <narc/api/files.h>
+#include <narc/defs/fatb.h>
+#include <narc/defs/fimg.h>
 
 enum narc_error narc_files_getimg(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const uint16_t file_idx, const unsigned char **out_image, uint32_t *out_size)
 {

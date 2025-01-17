@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <api/check.h>
+#include <narc/api/check.h>
 
 #define ERROR_RET(expect, actual)           \
     {                                       \

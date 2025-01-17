@@ -19,11 +19,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "api/dump.h"
-#include "api/error.h"
-#include "api/load.h"
-#include "defs/error.h"
-#include "defs/vfs.h"
+#include <narc/api/dump.h>
+#include <narc/api/error.h>
+#include <narc/api/load.h>
+#include <narc/defs/error.h>
+#include <narc/defs/vfs.h>
 
 #include "command.h"
 #include "strutil.h"

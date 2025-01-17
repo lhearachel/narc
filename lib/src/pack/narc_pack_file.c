@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <api/pack.h>
-#include <defs/fatb.h>
+#include <narc/api/pack.h>
+#include <narc/defs/fatb.h>
 
 #include <stdlib.h>
 

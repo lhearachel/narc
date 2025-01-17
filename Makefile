@@ -32,7 +32,7 @@ CFLAGS += -MMD -Wall -Wextra -Wpedantic -std=c99
 CFLAGS += -I./lib/include
 
 LIBAPI = check dump error files load pack
-LIBINC = $(wildcard lib/include/*.h) $(wildcard lib/include/*/*.h)
+LIBINC = $(wildcard lib/include/narc/*.h) $(wildcard lib/include/narc/*/*.h)
 LIBSRC = $(foreach api,$(LIBAPI),$(wildcard lib/src/$(api)/*.c))
 LIBOBJ = $(LIBSRC:.c=.o)
 LIBDEP = $(LIBSRC:.c=.d)
@@ -91,9 +91,9 @@ install: lib cli
 
 	install -m 755 -t $(DESTDIR)/bin $(CLITARGET)
 	install -m 644 -t $(DESTDIR)/lib $(LIBTARGET)
-	install -m 644 -t $(DESTDIR)/include/narc $(wildcard lib/include/*.h)
-	install -m 644 -t $(DESTDIR)/include/narc/api $(wildcard lib/include/api/*.h)
-	install -m 644 -t $(DESTDIR)/include/narc/defs $(wildcard lib/include/defs/*.h)
+	install -m 644 -t $(DESTDIR)/include/narc $(wildcard lib/include/narc/*.h)
+	install -m 644 -t $(DESTDIR)/include/narc/api $(wildcard lib/include/narc/api/*.h)
+	install -m 644 -t $(DESTDIR)/include/narc/defs $(wildcard lib/include/narc/defs/*.h)
 
 # Compile library sources with position-independent code for shared object link
 lib/src/%.o: CFLAGS += -fpic

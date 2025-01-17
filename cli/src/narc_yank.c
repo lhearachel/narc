@@ -19,9 +19,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "api/error.h"
-#include "api/files.h"
-#include "api/load.h"
+#include <narc/api/error.h>
+#include <narc/api/files.h>
+#include <narc/api/load.h>
 
 #include "command.h"
 #include "strutil.h"

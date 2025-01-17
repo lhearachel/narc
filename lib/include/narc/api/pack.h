@@ -20,8 +20,8 @@
 extern "C" {
 #endif
 
-#include <defs/error.h>
-#include <defs/vfs.h>
+#include <narc/defs/error.h>
+#include <narc/defs/vfs.h>
 
 #include <stdint.h>
 

@@ -20,9 +20,9 @@
 extern "C" {
 #endif
 
-#include <defs/error.h>
-#include <defs/narc.h>
-#include <defs/vfs.h>
+#include <narc/defs/error.h>
+#include <narc/defs/narc.h>
+#include <narc/defs/vfs.h>
 
 /*
  * The maximum string length of any extension which may be returned by

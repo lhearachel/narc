@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef NARC_H
-#define NARC_H
+#ifndef NARC_API_ERROR_H
+#define NARC_API_ERROR_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <api/check.h>
-#include <api/dump.h>
-#include <api/error.h>
-#include <api/files.h>
-#include <api/load.h>
-#include <api/pack.h>
+#include <narc/defs/error.h>
+
+/*
+ * Convert a `narc_error` value into a corresponding human-readable message.
+ */
+const char *narc_strerror(enum narc_error error);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // NARC_H
+#endif // NARC_API_ERROR_H
