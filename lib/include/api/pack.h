@@ -45,6 +45,13 @@ void narc_pack_halt(struct vfs_pack_ctx *ctx);
 void narc_pack_file(struct vfs_pack_ctx *ctx, unsigned char *image, const uint32_t size);
 
 /*
+ * Add a copy of the input file image to the packing context. The context will
+ * claim ownership of the image to be packed. Invoking `narc_pack_halt` after
+ * this routine will thus destroy the underlying file image.
+ */
+void narc_pack_file_copy(struct vfs_pack_ctx *ctx, unsigned char *image, const uint32_t size);
+
+/*
  * Construct a NARC in-memory from the given packing context. As a side effect,
  * the packing context structure will be destroyed and freed.
  */
