@@ -30,7 +30,7 @@ project(
 
 native = get_option('native')
 install = native and meson.is_cross_build() ? false : true
-version = files('VERSION')
+version = files('.version')
 
 subdir('tools')
 subdir('lib')
