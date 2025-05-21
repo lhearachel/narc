@@ -32,7 +32,7 @@ library `libnarc` and a static executable. After acquiring a copy of the source
 -- via `git` or a `tar` archive -- `cd` into the source folder and run:
 
 ```bash
-sudo make install
+make install
 ```
 
 By default:
