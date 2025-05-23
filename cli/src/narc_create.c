@@ -162,7 +162,7 @@ static int pack(struct options *opts)
     struct vfs_pack_ctx *ctx = NULL;
     struct strbuild *index = NULL;
     struct strvec *to_pack = NULL;
-    char *naix = strcpy_fext(opts->output, "naix");
+    char *naix = strcpy_fext(opts->output, "naix.h");
 
     dir = opendir(opts->input);
     if (dir == NULL) {
