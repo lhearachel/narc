@@ -58,7 +58,7 @@ enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx
     strcpy(fname_buf, dst_dir);
     char *fname_bufp = fname_buf + strlen(dst_dir);
     fname_bufp[0] = '/';
-    fname_bufp[fname_len] = '\0';
+    fname_bufp[fname_len - strlen(dst_dir)] = '\0';
 
     for (int i = 0; i < fatb_meta->num_files; i++) {
         struct fatb_entry *entry = (struct fatb_entry *)(narc->vfs + fatb_entry_start + (sizeof(struct fatb_entry) * i));
