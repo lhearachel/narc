@@ -77,6 +77,7 @@ int extract(int argc, const char **argv)
         FAIL("narc extract: error while writing to DIRECTORY “%s”: %s\n", output, narc_strerror(err));
     }
 
+    free(output);
     return EXIT_SUCCESS;
 
 fail:

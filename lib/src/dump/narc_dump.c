@@ -63,7 +63,7 @@ enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx
     for (int i = 0; i < fatb_meta->num_files; i++) {
         struct fatb_entry *entry = (struct fatb_entry *)(narc->vfs + fatb_entry_start + (sizeof(struct fatb_entry) * i));
         const unsigned char *fimage = narc->vfs + fimg_entry_start + entry->start;
-        const char *ext = narc_files_getext((const char *)fimage);
+        char *ext = narc_files_getext((const char *)fimage);
         sprintf(&fname_bufp[1], "%05d%s", i, ext);
 
         FILE *fout = fopen(fname_buf, "wb");
@@ -73,7 +73,9 @@ enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx
 
         fwrite(fimage, sizeof(unsigned char), entry->end - entry->start, fout);
         fclose(fout);
+        free(ext);
     }
 
+    free(fname_buf);
     return NARCERR_NONE;
 }
