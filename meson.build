@@ -22,7 +22,6 @@ project(
     # This is a little ugly, but it works... I guess...
     version: run_command('./tools/version.sh', '.version', check: false).stdout().strip(),
     default_options: {
-        'b_sanitize': 'address,undefined',
         'buildtype': 'release', # O3
         'warning_level': '3', # all, extra, pedantic
         'c_std': 'c99',
