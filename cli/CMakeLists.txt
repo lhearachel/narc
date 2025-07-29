@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
-# Read version from .version file
-file(READ "${CMAKE_SOURCE_DIR}/.version" NARC_VERSION)
+# Read version from .version file in project root
+file(READ "${CMAKE_CURRENT_LIST_DIR}/../.version" NARC_VERSION)
 string(STRIP "${NARC_VERSION}" NARC_VERSION)
 
 # Generate version.h header
