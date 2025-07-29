@@ -17,6 +17,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 
 #include <narc/api/error.h>
 #include <narc/api/files.h>
@@ -86,7 +87,7 @@ int info(int argc, const char **argv)
 
     for (size_t i = 0; i < fatb_meta->num_files; i++, fatb++) {
         char *ext = narc_files_getext(fimg + fatb->start);
-        printf("  - %05ld -> { start = 0x%08X, size = 0x%08X, filetype = %-8s }\n", i, fatb->start, fatb->end - fatb->start, ext);
+        printf("  - %05" PRIu64 " -> { start = 0x%08X, size = 0x%08X, filetype = %-8s }\n", i, fatb->start, fatb->end - fatb->start, ext);
         free(ext);
     }
 
