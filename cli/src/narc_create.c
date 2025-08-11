@@ -17,12 +17,22 @@
 #include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
+#if defined(WIN32) || defined(_MSC_VER)
+#include "fnmatch_win.h"
+#else
 #include <fnmatch.h>
+#endif
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined(WIN32) || defined(_MSC_VER)
+#include <direct.h>
+#define getcwd _getcwd
+#define chdir _chdir
+#else
 #include <unistd.h>
+#endif
 
 #include <sys/stat.h>
 
@@ -150,7 +160,7 @@ static int parse_opts(int *argc, const char ***argv, struct options *opts)
         }
     }
 
-    return orig_argv - *argv;
+    return (int)(orig_argv - *argv);
 }
 
 static int pack(struct options *opts)

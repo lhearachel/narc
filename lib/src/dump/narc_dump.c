@@ -25,10 +25,30 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(WIN32) || defined(_MSC_VER)
+#include <Windows.h>
+#else
 #include <sys/stat.h>
+#endif
 
 enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx, const char *dst_dir)
 {
+#if defined(WIN32) || defined(_MSC_VER)
+    if (!CreateDirectoryA(dst_dir, NULL)) {
+        DWORD error = GetLastError();
+        if (error == ERROR_ALREADY_EXISTS) {
+            // already exists, check if it's actually a file
+            DWORD attrs = GetFileAttributesA(dst_dir);
+            if (attrs != INVALID_FILE_ATTRIBUTES && !(attrs & FILE_ATTRIBUTE_DIRECTORY)) {
+                return NARCERR_DUMP_TARGET_IS_FILE;
+            }
+        } else if (error == ERROR_PATH_NOT_FOUND || error == ERROR_FILE_NOT_FOUND) {
+            return NARCERR_ERRNO;
+        } else {
+            return NARCERR_ERRNO;
+        }
+    }
+#else
     if (mkdir(dst_dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1) {
         if (errno == ENOTDIR) {
             return NARCERR_DUMP_TARGET_IS_FILE;
@@ -38,6 +58,7 @@ enum narc_error narc_dump(const struct narc *narc, const struct vfs_ctx *vfs_ctx
             return NARCERR_ERRNO;
         }
     }
+#endif
 
     // Support only the base case for now: ignore any existing file-name table
     // and write images to disk with ID-derived names.

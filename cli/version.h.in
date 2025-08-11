@@ -1,0 +1,8 @@
+/* THIS HEADER IS AUTOMATICALLY GENERATED */
+/*          DO NOT MODIFY IT!!!           */
+#ifndef NARC_VERSION_H
+#define NARC_VERSION_H
+
+#define NARC_VERSION "@NARC_VERSION@"
+
+#endif /* NARC_VERSION_H */
