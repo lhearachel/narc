@@ -36,6 +36,7 @@ static const struct { const char *magic; const char *ext; size_t cmp_n; } extens
     { "BTX0", "BTX0", 4 },
     { "BMA0", "BMA0", 4 },
     { "BVA0", "BVA0", 4 },
+    { " APS", "spa", 4 },
     { 0 }, // must always be last!
 };
 // clang-format on
