@@ -24,7 +24,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(WIN32) || defined(_MSC_VER)
 #include <sys/stat.h>
+#ifndef S_ISDIR
+#define S_ISDIR(mode) (((mode) & S_IFMT) == S_IFDIR)
+#endif
+#else
+#include <sys/stat.h>
+#endif
 
 char *basename(const char *path)
 {
@@ -82,7 +89,7 @@ char *strcpy_fext(const char *path, const char *ext)
         p = (char *)path;
     }
 
-    int len = p - path;
+    int len = (int)(p - path);
     char *buf = malloc(len + strlen(ext) + 2);
     sprintf(buf, "%.*s.%s", len, path, ext);
     return buf;
