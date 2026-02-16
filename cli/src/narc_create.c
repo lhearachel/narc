@@ -100,7 +100,7 @@ static int pack(struct options *opts);
 static struct strvec *build_pack_list(DIR *dir, const char *dir_name, const char *order_fname, const char *ignore_fname);
 static struct strbuild *start_index(const char *target_fname, char **out_guard);
 static void add_to_index(struct strbuild *index, const char *fname, const size_t i);
-static void finish_index(struct strbuild *index, const char *guard);
+static void finish_index(struct strbuild *index, const char *guard, const size_t count);
 
 int create(int argc, const char **argv)
 {
@@ -195,7 +195,8 @@ static int pack(struct options *opts)
 
     chdir(opts->input);
     ctx = narc_pack_start();
-    for (size_t i = 0; i < to_pack->count; i++) {
+    size_t i;
+    for (i = 0; i < to_pack->count; i++) {
         FILE *f = fopen(to_pack->s[i], "rb");
         if (f == NULL) {
             FAIL("narc create: error while opening file “%s” for reading: %s\n", to_pack->s[i], strerror(errno));
@@ -216,7 +217,7 @@ static int pack(struct options *opts)
         fclose(f);
     }
     narc = narc_pack(ctx);
-    finish_index(index, guard);
+    finish_index(index, guard, i);
     chdir(cwd);
 
     if (opts->naix) {
@@ -385,7 +386,11 @@ static void add_to_index(struct strbuild *index, const char *fname, const size_t
     strbuild_sprintf(index, naix_member, def_name, i);
 }
 
-static void finish_index(struct strbuild *index, const char *guard)
+static void finish_index(struct strbuild *index, const char *guard, const size_t count)
 {
+    char count_name[256];
+    strncpy(count_name, guard, strlen(guard) - 6); // copy without "NAIX_H"
+    strcat(count_name, "COUNT");
+    strbuild_sprintf(index, naix_member, count_name, count);
     strbuild_sprintf(index, naix_footer, guard);
 }
